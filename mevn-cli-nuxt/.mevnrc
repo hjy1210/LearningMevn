@@ -1,0 +1,11 @@
+{
+  "name": "mevn-cli-nuxt",
+  "template": "Nuxt.js",
+  "modules": [],
+  "renderingMode": "universal",
+  "deployTarget": "server",
+  "isConfigured": {
+    "client": true,
+    "server": true
+  }
+}
