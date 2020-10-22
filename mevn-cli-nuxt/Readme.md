@@ -21,3 +21,5 @@
 ## form
 將 create.vue 修改成有 form 以便上傳資料。
 
+## CRUD
+`mevn generate`, `CRUD Boilerplate (server)` 提供MongoDB URI path(mongodb://localhost:27017)
