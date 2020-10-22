@@ -8,7 +8,12 @@
 * 再新增終端機，切換到目錄 `<appname>`，執行 `mevn serve`，選項選取 `server` 建立後端應用程式，網址為 `http://localhost:9000/api`
 
 ## 新增頁面(Page)
-執行 `mevn generate`，選項中選Page，取適當的名字，例如 `Home`。這會在pages字幕錄下產生 `Home.vue` 檔案。瀏覽的路徑為 `http://localhost:3000/home`。
+執行 `mevn generate`，選項中選client端,
+取 `Home` 當名字，選取 `Page Component`。這會在 `pages` 子目路錄下產生 `Home.vue` 檔案。瀏覽的路徑為 `http://localhost:3000/home`。
 注意：
 * 開發時，不知道為什麼同時瀏覽 `/` 與 `/home` 會停頓下來。
-* `.vue` 檔案的格式要求很嚴，譬如下一層比前一層必須退縮兩個空白。
+* `.vue` 檔案的格式要求很嚴，譬如下一層比前一層必須退縮兩個空白，這是eslint.js在作祟。
+
+依樣畫葫蘆，產生 create.vue, edit.vue, posts.vue。
+
+參考[NuxtJS routing](https://nuxtjs.org/guides/get-started/routing)，在 `index.vue` 裡面增加到 create.vue, edit.vue, posts.vue 的連結。
