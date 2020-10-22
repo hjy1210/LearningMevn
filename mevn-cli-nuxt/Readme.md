@@ -22,4 +22,12 @@
 將 create.vue 修改成有 form 以便上傳資料。
 
 ## CRUD
-`mevn generate`, `CRUD Boilerplate (server)` 提供MongoDB URI path(mongodb://localhost:27017)
+執行 `mevn generate`,選取 `CRUD Boilerplate (server)`，提供 `MongoDB URI path(mongodb://localhost:27017)`，建立CRUD的框架。框架中連結的資料庫為userdb，collection為users。
+
+試驗性的，用 `mongo shell`，執行下面指令，
+* `use userdb`
+* `db.users.insertOne({name:"Yang",age:71})`
+
+在 userdb.users 新增一筆資料，瀏覽到 http://localhost:9000/api 
+可查到資料，可見框架有效。
+
