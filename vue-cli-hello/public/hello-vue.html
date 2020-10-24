@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <h3>Text {{}}</h3>
+        {{ message }}
+        <h3>Attributes v-bind</h3>
+        <span v-bind:title="message">
+            Hover your mouse over me for a few seconds
+            to see my dynamically bound title!
+        </span>
+        <!--“keep this element’s title attribute up-to-date with the message property o
+            n the Vue instance.”-->
+        <h3> Dom structure v-if</h3>
+        <span v-if="seen">Now you see me</span>
+        <h3> Loop v-for</h3>
+        <ol>
+            <li v-for="todo in todos">
+                {{ todo.text }}
+            </li>
+        </ol>
+        <h3>User Input v-on:click</h3>
+        <p>{{ message }}</p>
+        <button v-on:click="reverseMessage">Reverse Message</button>
+        <h3>Form Input v-model</h3>
+        <p>{{ message }}</p>
+        <input v-model="message">
+        <h3>Component</h3>
+        <ol>
+
+            <!--
+                Now we provide each todo-item with the todo object
+                it's representing, so that its content can be dynamic.
+                We also need to provide each component with a "key",
+                which will be explained later.
+            -->
+            <todo-item v-for="item in todos" v-bind:todo="item" v-bind:key="item.id"></todo-item>
+        </ol>
+        <!-- Create an instance of the todo-item component -->
+        <todo-item v-bind:todo="onetodo"></todo-item>
+    </div>
+</body>
+<script>
+    Vue.component('todo-item', {
+        props: ['todo'],
+        template: '<li>{{todo.text}}</li>'
+    })
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: 'Hello Vue!',
+            seen: true,
+            todos: [
+                { text: 'Learn JavaScript', id: 1 },
+                { text: 'Learn Vue', id: 2 },
+                { text: 'Build something awesome', id: 3 }
+            ],
+            onetodo: { text: 'Yang' }
+
+        },
+        methods: {
+            reverseMessage: function () {
+                this.message = this.message.split('').reverse().join('')
+            }
+        }
+    })
+</script>
+
+</html>
