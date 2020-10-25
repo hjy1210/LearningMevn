@@ -42,9 +42,7 @@ export default {
     addPost() {
       const uri = 'http://localhost:9000/api'
       axios.post(uri, this.form).then(() => {
-        // axios.get('http://localhost:3000/users').then((response) => {
-        //   this.users = response.data
-        // })
+        this.$router.push({ name: 'users' })
       })
     },
   },

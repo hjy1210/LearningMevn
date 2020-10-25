@@ -41,7 +41,7 @@ export default {
     updatePost() {
       const uri = `http://localhost:9000/api/${this.id}`
       axios.put(uri, this.form).then(() => {
-        // this.$router.push({ name: 'posts' })
+        this.$router.push({ name: 'users' })
       })
     },
   },
