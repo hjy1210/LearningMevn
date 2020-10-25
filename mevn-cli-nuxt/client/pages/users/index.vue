@@ -22,7 +22,9 @@
           <td>{{ user.name }}</td>
           <td>{{ user.age }}</td>
           <td>
-            <NuxtLink :to="'/' + user._id" class="button--green">Edit</NuxtLink>
+            <NuxtLink :to="'/users/' + user._id" class="button--green"
+              >Edit</NuxtLink
+            >
           </td>
           <td><button @click.prevent="deletePost(user._id)">Delete</button></td>
         </tr>
