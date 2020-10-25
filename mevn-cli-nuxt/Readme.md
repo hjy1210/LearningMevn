@@ -9,16 +9,20 @@
 
 ## 新增頁面(Page)與連結
 執行 `mevn generate`，選項中選client端,
-取 `Home` 當名字，選取 `Page Component`。這會在 `pages` 子目路錄下產生 `Home.vue` 檔案。瀏覽的路徑為 `http://localhost:3000/home`。
+取 `create` 當名字，選取 `Page Component`。這會在 `pages` 子目路錄下產生 `create.vue` 檔案。瀏覽的路徑為 `http://localhost:3000/create`。
 注意：
-* 開發時，不知道為什麼同時瀏覽 `/` 與 `/home` 會停頓下來。
+* 開發時，不知道為什麼同時瀏覽 `/` 與 `/create` 會停頓下來。
 * `.vue` 檔案的格式要求很嚴，譬如下一層比前一層必須退縮兩個空白，這是eslint.js在作祟，可用 vetur 的模式格式化文件。
 
-依樣畫葫蘆，產生 create.vue, _id_.vue, users.vue。
+依樣畫葫蘆，產生 users/_id_.vue, users/index.vue。
 
-參考[NuxtJS routing](https://nuxtjs.org/guides/get-started/routing)，在 `index.vue` 裡面增加到 create.vue, users.vue 的連結。
+參考[NuxtJS routing](https://nuxtjs.org/guides/get-started/routing)，在 `index.vue` 裡面增加到 create.vue, users/index.vue 的連結。
 
 users.vue 裡面 Edit NuxtLink 善用v-bind 屬性 to 時字串可以是single javascript expression。`:to="'/' + user._id"`，讓 NuxtLink 可以動態連結。
+
+create.vu, _id.view 利用 `this.$router.push({ name: 'users' })` [this.$router.push](https://github.com/nuxt/nuxt.js/issues/1616)回到 `/users`
+
+完成初步的程式，server端提供服務，讓client端可以完成：閱覽users清單、新增user, 編輯user, 刪除user。
 
 ## form
 將 create.vue 修改成有 form 以便上傳資料。
