@@ -5,7 +5,7 @@
       <div>
         <div>
           <div>
-            <label>User Title:{{ id }}</label>
+            <label>User name:{{ id }}</label>
             <input v-model="form.name" type="text" />
           </div>
           <div>
