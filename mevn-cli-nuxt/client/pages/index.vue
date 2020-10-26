@@ -22,7 +22,7 @@
         >
           GitHub
         </a>
-        <NuxtLink to="/create" class="button--green">Create</NuxtLink>
+        <NLink to="/create" class="button--green">Create</NLink>
         <!--<NuxtLink to="/edit" class="button--green">Edit</NuxtLink>-->
         <NuxtLink to="/users" class="button--green">users</NuxtLink>
       </div>

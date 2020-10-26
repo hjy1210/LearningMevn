@@ -28,6 +28,7 @@ export default {
   data() {
     return {
       form: {},
+      //  /// https://nuxtjs.org/examples/custom-routes
       id: this.$route.params.id,
     }
   },
@@ -40,6 +41,7 @@ export default {
   methods: {
     updatePost() {
       const uri = `http://localhost:9000/api/${this.id}`
+      //  /// https://nuxtjs.org/examples/custom-page-loading
       axios.put(uri, this.form).then(() => {
         this.$router.push({ name: 'users' })
       })
