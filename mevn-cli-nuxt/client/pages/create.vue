@@ -43,6 +43,7 @@ export default {
       const uri = 'http://localhost:9000/api'
       axios.post(uri, this.form).then(() => {
         //  /// https://nuxtjs.org/examples/custom-page-loading
+        //  /// https://router.vuejs.org/guide/essentials/navigation.html
         this.$router.push({ name: 'users' })
       })
     },

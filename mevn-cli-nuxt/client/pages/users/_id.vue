@@ -29,6 +29,7 @@ export default {
     return {
       form: {},
       //  /// https://nuxtjs.org/examples/custom-routes
+      //  /// https://router.vuejs.org/api/#the-route-object
       id: this.$route.params.id,
     }
   },
@@ -42,6 +43,7 @@ export default {
     updatePost() {
       const uri = `http://localhost:9000/api/${this.id}`
       //  /// https://nuxtjs.org/examples/custom-page-loading
+      //  /// https://router.vuejs.org/guide/essentials/navigation.html
       axios.put(uri, this.form).then(() => {
         this.$router.push({ name: 'users' })
       })
