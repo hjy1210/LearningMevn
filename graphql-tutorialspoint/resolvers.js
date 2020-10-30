@@ -4,7 +4,12 @@ const Query = {
 		return 'hello from  TutorialsPoint !!!';
 	},
 	students: () => db.students.list(),
-	colleges: () => db.colleges.list()
+    colleges: () => db.colleges.list(),
+    //resolver function for studentbyId
+    studentById:(root,args,context,info) => {
+        //args will contain parameter passed in query
+        return db.students.get(args.id);
+    }
 };
 
 module.exports = { Query };
