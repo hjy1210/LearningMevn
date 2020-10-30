@@ -20,7 +20,7 @@
 
 users.vue 裡面 Edit NuxtLink 善用v-bind 屬性 to 時字串可以是single javascript expression。`:to="'/' + user._id"`，讓 NuxtLink 可以動態連結。
 
-create.vu, _id.view 利用 `this.$router.push({ name: 'users' })` [this.$router.push](https://github.com/nuxt/nuxt.js/issues/1616)回到 `/users`
+create.vue, _id.vue 利用 `this.$router.push({ name: 'users' })` [this.$router.push](https://github.com/nuxt/nuxt.js/issues/1616)回到 `/users`
 
 完成初步的程式，server端提供服務，讓client端可以完成：閱覽users清單、新增user, 編輯user, 刪除user。
 
