@@ -13,6 +13,10 @@ type Query {
    sayHello(name:String!):String
    setFavouriteColor(color:ColorType):String
 }
+type Mutation {
+   createStudent(collegeId:ID,firstName:String,lastName:String):String
+   addStudent_returns_object(collegeId:ID,firstName:String,lastName:String):Student
+}
 type Student {
    id:ID!
    firstName:String

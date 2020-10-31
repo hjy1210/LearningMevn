@@ -197,4 +197,68 @@ query myquery($myname_Variable:String!, $color_variable:ColorType)
 }
 ```
 
+## Mutation
+### Schema Section
+```
+...
+type Mutation {
+   createStudent(collegeId:ID,firstName:String,lastName:String):String
+   addStudent_returns_object(collegeId:ID,firstName:String,lastName:String):Student
+}
+...
+```
+### Resolver Section
+```
+...
+const Mutation = {
+    createStudent:(root,args,context,info) => {
+        return db.students.create({
+            collegeId:args.collegeId,
+            firstName:args.firstName,
+            lastName:args.lastName})
+    },
+    addStudent_returns_object:(root,args,context,info) => {
+        const id = db.students.create({
+           collegeId:args.collegeId,
+           firstName:args.firstName,
+           lastName:args.lastName
+        })
+        return db.students.get(id)
+    }
+}
+const Student = {
+    college:(root) => {
+       return db.colleges.get(root.collegeId);
+    }
+ }
+module.exports = { Query, Student, Mutation };
+```
 
+### Mutation Section
+```
+mutation {
+   addStudent_returns_object(collegeId:"col-101",firstName:"Susan",lastName:"George") {
+      id
+      firstName
+      college{
+         id
+         name
+      }
+   }
+}
+```
+### Result Section
+```
+{
+  "data": {
+    "addStudent_returns_object": {
+      "id": "rJU-2ncdw",
+      "firstName": "Susan",
+      "college": {
+        "id": "col-101",
+        "name": "AMU"
+      }
+    }
+  }
+}
+```
