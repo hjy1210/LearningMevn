@@ -14,6 +14,7 @@ type Query {
    setFavouriteColor(color:ColorType):String
 }
 type Mutation {
+   signUp(input:SignUpInput):String
    createStudent(collegeId:ID,firstName:String,lastName:String):String
    addStudent_returns_object(collegeId:ID,firstName:String,lastName:String):Student
 }
@@ -30,4 +31,9 @@ type College {
    name:String
    location:String
    rating:Float
+}
+input SignUpInput {
+   email:String!,
+   password:String!,
+   firstName:String!
 }
