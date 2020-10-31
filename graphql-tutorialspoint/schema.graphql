@@ -3,16 +3,16 @@ enum ColorType {
    BLUE
    GREEN
 }
-
 type Query {
    greeting:String
    students:[Student]
+   students1:[Student]
+   students2:[Student]
    colleges:[College]
    studentById(id:ID!):Student 
    sayHello(name:String!):String
    setFavouriteColor(color:ColorType):String
 }
-
 type Student {
    id:ID!
    firstName:String

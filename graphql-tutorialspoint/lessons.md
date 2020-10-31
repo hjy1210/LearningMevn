@@ -3,23 +3,25 @@
 ## GraphQL - Environment Setup
 
 ## GraphQL - Query (include: Nested, Variables)
+
 ### Schema Section
+
 ```
 enum ColorType {
    RED
    BLUE
    GREEN
 }
-
 type Query {
    greeting:String
    students:[Student]
+   students1:[Student]
+   students2:[Student]
    colleges:[College]
-   studentById(id:ID!):Student 
+   studentById(id:ID!):Student
    sayHello(name:String!):String
    setFavouriteColor(color:ColorType):String
 }
-
 type Student {
    id:ID!
    firstName:String
@@ -40,7 +42,7 @@ type College {
 
 ```
 const db = require('./db');
-class Student{
+class Stud{
     constructor(id, firstName, lastName, collegeId){
         this.id=id
         this.firstName=firstName
@@ -53,7 +55,9 @@ const Query = {
 	greeting: () => {
 		return 'hello from  TutorialsPoint !!!';
 	},
-	students: () => db.students.list().map(s=>new Student(s.id,s.firstName,s.lastName,s.collegeId)),
+    students: () => db.students.list(),
+    students1: () => db.students.list().map(s=>new Stud(s.id,s.firstName,s.lastName,s.collegeId)),
+    students2: () => db.students.list().map(s=>{return {id:s.id,firstName:s.firstName,college:db.colleges.get(s.collegeId)}}),
     colleges: () => db.colleges.list(),
     //resolver function for studentbyId
     studentById:(root,args,context,info) => {
@@ -76,7 +80,19 @@ module.exports = { Query };
 ```
 query myquery($myname_Variable:String!, $color_variable:ColorType)
 {
-  StudentList:students{
+  S: students{
+    firstName
+  }
+  S1:students1{
+    id,
+    firstName,
+    college{
+      id,
+      name,
+      location
+    }
+  },
+  S2:students2{
     id,
     firstName,
     college{
@@ -105,7 +121,47 @@ query myquery($myname_Variable:String!, $color_variable:ColorType)
 ```
 {
   "data": {
-    "StudentList": [
+    "S": [
+      {
+        "firstName": "Mohtashim"
+      },
+      {
+        "firstName": "Kannan"
+      },
+      {
+        "firstName": "Kiran"
+      }
+    ],
+    "S1": [
+      {
+        "id": "S1001",
+        "firstName": "Mohtashim",
+        "college": {
+          "id": "col-102",
+          "name": "CUSAT",
+          "location": "Kerala"
+        }
+      },
+      {
+        "id": "S1002",
+        "firstName": "Kannan",
+        "college": {
+          "id": "col-101",
+          "name": "AMU",
+          "location": "Uttar Pradesh"
+        }
+      },
+      {
+        "id": "S1003",
+        "firstName": "Kiran",
+        "college": {
+          "id": "col-101",
+          "name": "AMU",
+          "location": "Uttar Pradesh"
+        }
+      }
+    ],
+    "S2": [
       {
         "id": "S1001",
         "firstName": "Mohtashim",
