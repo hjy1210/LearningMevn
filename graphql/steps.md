@@ -76,3 +76,7 @@ Note: 程式編譯時出現下列錯誤，
 listen EADDRINUSE: address already in use :::9000 
 ```
 可在編譯一次來解決。
+
+安裝 `graphql-import`。
+
+利用 `graphql-import` 裡面的 `importSchema` 將schemaDefs的內容放到外部檔案以便後續進一步的分割檔案。

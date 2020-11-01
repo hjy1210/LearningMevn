@@ -1,3 +1,4 @@
+const path = require('path')
 const { GraphQLSchema, GraphQLObjectType, GraphQLString, buildSchema } = require('graphql');
 const { makeExecutableSchema } = require('@graphql-tools/schema');
 // GraphQL schema
@@ -14,16 +15,9 @@ const graphqlSchema = new GraphQLSchema({
 		}
 	})
 });
-
+const { importSchema } = require('graphql-import');
 // Construct a schema, using GraphQL schema language
-var typeDefs = `
-  type Query {
-    message: String
-  }
-  schema {
-    query: Query
-  }
-`;
+let typeDefs = importSchema(path.join(__dirname, './index.graphql'));
 // The root provides a resolver function for each API endpoint
 var resolvers = {
 	Query: {
