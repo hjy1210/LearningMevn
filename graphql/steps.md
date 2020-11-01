@@ -80,3 +80,15 @@ listen EADDRINUSE: address already in use :::9000
 安裝 `graphql-import`。
 
 利用 `graphql-import` 裡面的 `importSchema` 將schemaDefs的內容放到外部檔案以便後續進一步的分割檔案。
+
+## 由客戶端呼叫
+參考 [apollo](https://apollo.vuejs.org/guide/installation.html#vue-cli-plugin)，建立框架時已安裝了apollo相關的組件，但
+main.js 裡面 httpLink 的port要由 5000 改成 9000，如下
+```
+const httpLink = new HttpLink({
+  // URL to graphql server, you should use an absolute URL here
+  uri: "http://localhost:9000/graphql"
+});
+```
+仔細看 [Queries](https://apollo.vuejs.org/guide/apollo/queries.html#simple-query) 這節，
+特別小心命名匹配(Name matching)問題，用 Home.vue 示範如何呼叫伺服端。

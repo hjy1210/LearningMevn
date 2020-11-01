@@ -22,7 +22,7 @@ let typeDefs = importSchema(path.join(__dirname, './index.graphql'));
 var resolvers = {
 	Query: {
 		message: () => {
-			return 'Hello world!';
+			return 'Yang say Hello world!';
 		}
 	}
 };
