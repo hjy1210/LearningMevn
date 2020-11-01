@@ -1,5 +1,5 @@
 const { GraphQLSchema, GraphQLObjectType, GraphQLString, buildSchema } = require('graphql');
-
+const { makeExecutableSchema } = require('@graphql-tools/schema');
 // GraphQL schema
 const graphqlSchema = new GraphQLSchema({
 	query: new GraphQLObjectType({
@@ -16,16 +16,26 @@ const graphqlSchema = new GraphQLSchema({
 });
 
 // Construct a schema, using GraphQL schema language
-var schema = buildSchema(`
+var typeDefs = `
   type Query {
     message: String
   }
-`);
+  schema {
+    query: Query
+  }
+`;
 // The root provides a resolver function for each API endpoint
-var resolver = {
-	message: () => {
-		return 'Hello world!';
+var resolvers = {
+	Query: {
+		message: () => {
+			return 'Hello world!';
+		}
 	}
 };
 
-module.exports = { schema, resolver };
+const executableSchema = makeExecutableSchema({
+	typeDefs,
+	resolvers
+});
+
+module.exports = { executableSchema };

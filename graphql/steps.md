@@ -61,4 +61,18 @@ query {
 代表伺服端操作正常。在 `server/graphql/schema.js` 可以看到伺服端如何提供 `message` 的檢索，了解為什麼可以現在只可檢索 `message`，不能檢索其它。
 
 ## 充實 GraphQL Schema
-參考 [evolution-of-writing-graphql-schema](https://medium.com/@dilipkumar/evolution-of-writing-graphql-schema-for-server-side-879907d8c698)， [running-an-express-graphql-server](https://graphql.org/graphql-js/running-an-express-graphql-server/)，用較新方式提供GraphQL Schema。
+參考 [evolution-of-writing-graphql-schema](https://medium.com/@dilipkumar/evolution-of-writing-graphql-schema-for-server-side-879907d8c698)， [running-an-express-graphql-server](https://graphql.org/graphql-js/running-an-express-graphql-server/)，[graphql-tools](https://github.com/ardatan/graphql-tools)，用較新方式提供可執行的GraphQL Schema。
+
+用
+```
+npm install graphql-tools --save
+```
+安裝 `graphql-tools`。
+
+利用 `graphql-tools` 裡面的 `makeExecutableSchema` 將代表schema的字串`typeDefs` 與實作的 `resolvers` 合併起來。
+
+Note: 程式編譯時出現下列錯誤，
+```
+listen EADDRINUSE: address already in use :::9000 
+```
+可在編譯一次來解決。
