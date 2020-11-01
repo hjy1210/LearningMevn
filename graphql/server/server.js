@@ -9,14 +9,15 @@ require('dotenv').config();
 app.use(cors());
 
 app.use(
-  '/graphql',
-  graphQLHttp({
-    schema,
-    graphiql: true,
-  }),
+	'/graphql',
+	graphQLHttp({
+		schema: schema.schema,
+		rootValue: schema.resolver,
+		graphiql: true
+	})
 );
 
 const PORT = process.env.PORT || 9000;
 app.listen(PORT, () => {
-  console.log(`Listening on localhost:${PORT}/graphql`);
+	console.log(`Listening on localhost:${PORT}/graphql`);
 });

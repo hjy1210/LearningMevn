@@ -59,3 +59,6 @@ query {
 }
 ```
 代表伺服端操作正常。在 `server/graphql/schema.js` 可以看到伺服端如何提供 `message` 的檢索，了解為什麼可以現在只可檢索 `message`，不能檢索其它。
+
+## 充實 GraphQL Schema
+參考 [evolution-of-writing-graphql-schema](https://medium.com/@dilipkumar/evolution-of-writing-graphql-schema-for-server-side-879907d8c698)， [running-an-express-graphql-server](https://graphql.org/graphql-js/running-an-express-graphql-server/)，用較新方式提供GraphQL Schema。
