@@ -1,0 +1,8 @@
+{
+  "name": "graphql",
+  "template": "GraphQL",
+  "isConfigured": {
+    "client": true,
+    "server": true
+  }
+}
