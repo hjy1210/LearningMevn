@@ -92,3 +92,6 @@ const httpLink = new HttpLink({
 ```
 仔細看 [Queries](https://apollo.vuejs.org/guide/apollo/queries.html#simple-query) 這節，
 特別小心命名匹配(Name matching)問題，用 Home.vue 示範如何呼叫伺服端。
+
+## 伺服端呼叫 MongoDb 資料庫
+參考 [Building a GraphQL API with Node and MongoDB](https://levelup.gitconnected.com/building-your-graphql-api-with-node-and-mongodb-799a2b9ae0b4) 利用 mongoose 加以實作。

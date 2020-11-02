@@ -1,6 +1,17 @@
 const express = require('express');
 const graphQLHttp = require('express-graphql');
 const {executableSchema} = require('./graphql/schema');
+
+const mongo = require('mongoose');
+mongo.connect('mongodb://localhost:27017/userdb', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+mongo.connection.once('open', () => {
+    console.log('connected to database');
+})
+const modelschema = require('./graphql/modelschema')
+
 const cors = require('cors');
 const app = express();
 
@@ -11,7 +22,7 @@ app.use(cors());
 app.use(
 	'/graphql',
 	graphQLHttp({
-		schema: executableSchema,
+		schema: modelschema,
 		graphiql: true
 	})
 );
