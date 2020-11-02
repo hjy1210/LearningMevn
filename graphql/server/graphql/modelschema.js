@@ -68,7 +68,7 @@ const RootQuery = new GraphQLObjectType({
         message: {
             type: GraphQLString,
             resolve() {
-                return 'Root resolver!!!';
+                return 'Root resolver';
             }
         },
         dish: {

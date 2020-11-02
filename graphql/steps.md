@@ -95,3 +95,5 @@ const httpLink = new HttpLink({
 
 ## 伺服端呼叫 MongoDb 資料庫
 參考 [Building a GraphQL API with Node and MongoDB](https://levelup.gitconnected.com/building-your-graphql-api-with-node-and-mongodb-799a2b9ae0b4) 利用 mongoose 加以實作。
+
+GraphQL Schema 的製作全面改成用javascript方式。
