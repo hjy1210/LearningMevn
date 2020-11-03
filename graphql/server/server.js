@@ -11,6 +11,8 @@ mongo.connection.once('open', () => {
 })
 const modelschema = require('./graphql/modelschema')
 
+const {executableSchema} = require('./graphql/schema');
+
 const cors = require('cors');
 const app = express();
 
@@ -21,7 +23,7 @@ app.use(cors());
 app.use(
 	'/graphql',
 	graphqlHTTP({
-		schema: modelschema,
+		schema: executableSchema,
 		graphiql: true
 	})
 );

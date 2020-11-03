@@ -1,0 +1,23 @@
+ type Dish {
+     id:ID,
+     name: String,
+     country: String,
+     tasty: Boolean,
+     chefid: ID
+ }
+ type Chef {
+     id:ID,
+     name: String,
+     rating: Float,
+     dishes: [Dish]
+ }
+  type Query {
+    message: String,
+    dishes:[Dish],
+    chefs:[Chef],
+    chef(id:ID):Chef,
+    dish(id:ID):Dish
+  }
+  schema {
+    query: Query
+  }
