@@ -3,7 +3,8 @@
      name: String,
      country: String,
      tasty: Boolean,
-     chefid: String
+     chefid: String,
+     chef:Chef
  }
  type Chef {
      id:ID,
@@ -19,6 +20,22 @@
     dish(id:ID):Dish,
     getDishes(chefid:String):[Dish]
   }
+  input ChefInput {
+   name:String,
+   rating:Float,
+  }
+  input DishInput {
+    name:String,
+    country:String,
+    tasty:Boolean,
+    chefid:String
+  }
+  type Mutation {
+    addChef(input: ChefInput):Chef,
+    addDish(input: DishInput):Dish
+  }
+
   schema {
-    query: Query
+    query: Query,
+    mutation: Mutation
   }

@@ -48,10 +48,27 @@ var resolvers = {
     },
     Chef:{
         dishes:async(parent,args)=>{
-            //console.log(parent.id)
             return await Dish.find({chefid:parent.id})
         }
+    },
+    Dish:{
+        chef:async(parent,args)=>{
+            return await Chef.findById(parent.chefid)
+        }
+    },
+    Mutation : {
+        addChef:(root,args,context,info) => {
+            let newChef = new Chef({name:args.input.name, rating:args.input.rating});
+            return newChef.save()
+        },
+        addDish:(root,args,context,info) => {
+            let newDish = new Dish({name:args.input.name, country:args.input.country, 
+                tasty:args.input.tasty, chefid:args.input.chefid});
+            return newDish.save()
+        }
+
     }
+    
 };
 
 const executableSchema = makeExecutableSchema({
