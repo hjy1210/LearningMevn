@@ -41,11 +41,15 @@ var resolvers = {
         },
         dish:(parent,args)=>{
             return Dish.findById(args.id)
+        },
+        getDishes:async (parent, args)=>{
+            return await Dish.find({chefid:args.chefid})
         }
     },
     Chef:{
-        dishes:(parent,args)=>{
-            return Dish.find(parent.id==chefid)
+        dishes:async(parent,args)=>{
+            //console.log(parent.id)
+            return await Dish.find({chefid:parent.id})
         }
     }
 };

@@ -93,10 +93,150 @@ const httpLink = new HttpLink({
 仔細看 [Queries](https://apollo.vuejs.org/guide/apollo/queries.html#simple-query) 這節，
 特別小心命名匹配(Name matching)問題，用 Home.vue 示範如何呼叫伺服端。
 
-## 伺服端呼叫 MongoDb 資料庫
+## 伺服端呼叫 MongoDb 資料庫 : modelSchema
 參考 [Building a GraphQL API with Node and MongoDB](https://levelup.gitconnected.com/building-your-graphql-api-with-node-and-mongodb-799a2b9ae0b4) 利用 mongoose 加以實作。
 
-GraphQL Schema 的製作全面改成用javascript方式。
+GraphQL Schema 的製作全面用javascript方式。
 
-增加 executableSchema，relation kookup 仍未完成。
+## 伺服端呼叫 MongoDb 資料庫 : executableSchema 
+GraphQL Schema 的製作分成 `typeDefs, resolvers` 兩部分，前者為文字檔，後者為`.js`檔，再用 `grapgql-tools` 的`makeExecutableSchema` 合併之。
+
+**初步已經可以用chefid合併Chef與Dish的資料**。關鍵碼如下：
+### Mongoose Model part
+```
+file: dish.js
+...
+const dishSchema = new Schema({
+    name: String,
+    country: String,
+    tasty: Boolean,
+    chefid: String
+});
+...
+```
+### GraphQL Schema part
+```
+file: index.graphql
+ type Dish {
+     id:ID,
+     name: String,
+     country: String,
+     tasty: Boolean,
+     chefid: String
+ }
+ type Chef {
+     id:ID,
+     name: String,
+     rating: Float,
+     dishes: [Dish]
+ }
+  type Query {
+    message: String,
+    dishes:[Dish],
+    chefs:[Chef],
+    chef(id:ID):Chef,
+    dish(id:ID):Dish,
+    getDishes(chefid:String):[Dish]
+  }
+  schema {
+    query: Query
+  }
+  ```
+### GraphQL Resolver part
+```
+file schema.js
+...
+var resolvers = {
+  Query: {
+    ...
+        getDishes:async (parent, args)=>{
+            return await Dish.find({chefid:args.chefid})
+        },
+    ...
+  },
+  Chef:{
+    dishes:async(parent,args)=>{
+      return await Dish.find({chefid:parent.id})
+    }
+  }
+}
+...
+```
+### Query Panel in GraphiQL
+```
+{
+  message,
+  getDishes(chefid:"5fa002472903b100d0cc75bc"){id,name}
+  dishes {
+   id,
+    name,
+    chefid
+  },
+  chefs {
+    id,
+    name,
+    dishes{name}
+  },
+  chef(id:"5fa002472903b100d0cc75bc"){id,name},
+  d1:dish(id:"5f9fe1410d16b52c789d4631"){id,name},
+  d2:dish(id:"5f9fe1050d16b52c789d4630"){id,name}
+}
+```
+### Result panel in GRapgiQL
+```
+{
+  "data": {
+    "message": "Yang say Hello world!",
+    "getDishes": [
+      {
+        "id": "5f9fe1410d16b52c789d4631",
+        "name": "ugly"
+      }
+    ],
+    "dishes": [
+      {
+        "id": "5f9fe1050d16b52c789d4630",
+        "name": "beauty",
+        "chefid": null
+      },
+      {
+        "id": "5f9fe1410d16b52c789d4631",
+        "name": "ugly",
+        "chefid": "5fa002472903b100d0cc75bc"
+      }
+    ],
+    "chefs": [
+      {
+        "id": "5fa0022c2903b100d0cc75bb",
+        "name": "Yang",
+        "dishes": []
+      },
+      {
+        "id": "5fa002472903b100d0cc75bc",
+        "name": "Huang",
+        "dishes": [
+          {
+            "name": "ugly"
+          }
+        ]
+      }
+    ],
+    "chef": {
+      "id": "5fa002472903b100d0cc75bc",
+      "name": "Huang"
+    },
+    "d1": {
+      "id": "5f9fe1410d16b52c789d4631",
+      "name": "ugly"
+    },
+    "d2": {
+      "id": "5f9fe1050d16b52c789d4630",
+      "name": "beauty"
+    }
+  }
+}
+```
+
+
+
 

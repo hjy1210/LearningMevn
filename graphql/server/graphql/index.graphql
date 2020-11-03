@@ -3,7 +3,7 @@
      name: String,
      country: String,
      tasty: Boolean,
-     chefid: ID
+     chefid: String
  }
  type Chef {
      id:ID,
@@ -16,7 +16,8 @@
     dishes:[Dish],
     chefs:[Chef],
     chef(id:ID):Chef,
-    dish(id:ID):Dish
+    dish(id:ID):Dish,
+    getDishes(chefid:String):[Dish]
   }
   schema {
     query: Query
