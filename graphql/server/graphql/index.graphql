@@ -31,8 +31,12 @@
     chefid:String
   }
   type Mutation {
+    addDish(input: DishInput):Dish,
+    updateDish(id:ID, input:DishInput):Dish,
+    deleteDish(id:ID):Dish
     addChef(input: ChefInput):Chef,
-    addDish(input: DishInput):Dish
+    updateChef(id:ID, input:ChefInput):Chef,
+    deleteChef(id:ID):Chef
   }
 
   schema {
