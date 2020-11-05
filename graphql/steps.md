@@ -237,6 +237,13 @@ var resolvers = {
 }
 ```
 
+## Mongoose Concepts
+
+[這裡](https://masteringjs.io/tutorials/mongoose/promise) 說明 `.save(), .find().exec()` 的結果都是 Promise(除非用了 callback)。
+Mongoose queries are thenables not promises。雖然，.find() 也是 thenable，但[Mongoose Docs](https://mongoosejs.com/docs/promises.html)說明了`.find().exec()`與`.find(`)的差別在於前者的 `error.stack` 較為清楚。
+
+所以根據[MDN Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)，可以 await 它們。
+
 
 
 

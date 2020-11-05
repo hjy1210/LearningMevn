@@ -27,7 +27,7 @@ let typeDefs = importSchema(path.join(__dirname, './index.graphql'));
 var resolvers = {
 	Query: {
 		message: () => {
-			return 'Yang say Hello world!';
+			return 'express mongoose provide services';
 		},
 		dishes: () => {
 			return Dish.find();
