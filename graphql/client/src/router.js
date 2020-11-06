@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
-import Chefedit from "./views/Chefedit.vue";
+import Dishes from "./views/Dishes.vue";
 
 Vue.use(Router);
 
@@ -28,6 +28,11 @@ export default new Router({
       path: "/chef/edit/:id",
       name: "chefedit",
       component: () => import("./views/Chefedit")
+    },
+    {
+      path: "/dishes",
+      name: "dishes",
+      component: Dishes
     }
   ]
 });

@@ -1,7 +1,7 @@
-const axios = require("axios")
+const axios = require("axios");
 axios({
-  url: 'http://localhost:9000/graphql',
-  method: 'post',
+  url: "http://localhost:9000/graphql",
+  method: "post",
   data: {
     query: `query abcd
     {
@@ -10,6 +10,6 @@ axios({
     }
     `
   }
-}).then((result) => {
-  console.log(result.data)
+}).then(result => {
+  console.log(result.data);
 });

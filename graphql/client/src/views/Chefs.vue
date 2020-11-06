@@ -19,7 +19,7 @@
               >Edit</router-link
             >
           </td>
-          <td><button @click.prevent="deletePost(chef.id)">Delete</button></td>
+          <td><button @click.prevent="deleteChef(chef.id)">Delete</button></td>
         </tr>
       </tbody>
     </table>
@@ -37,6 +37,25 @@ export default {
         { id: 2, name: "Huang", rating: 2.71 }
       ]
     };
+  },
+  methods:{
+    deleteChef(id) {
+      console.log(`Delete chef: # ${id}`);
+      this.$apollo.mutate({
+        mutation: gql`
+          mutation deleteChef($id: ID!) {
+            deleteChef(id: $id){
+              id
+            }
+          }
+        `,
+        variables: {
+          id: id,
+        },
+      });
+      location.reload();
+    },
+
   },
   apollo: {
     // Simple query that will update the 'hello' vue property

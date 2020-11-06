@@ -244,6 +244,12 @@ Mongoose queries are thenables not promises。雖然，.find() 也是 thenable�
 
 所以根據[MDN Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)，可以 await 它們。
 
+## 客戶端呼叫 GraphQL API
+呼叫時有兩部分組成，第一部分使用 GpapgQl SDF 語言，透過gql轉譯，第二部分為javascript,提供第一部分所需的參數。
 
+參考 [apollo.vuejs Docs](https://apollo.vuejs.org/guide/)，[building-a-crud-app-with-vue-and-graphql](https://blog.jscrambler.com/building-a-crud-app-with-vue-and-graphql/)，
+Dishes.vue 實作了CRUD。
+
+考量Vue Component 裡面程式片段的執行順序有先有後，須注意$apollo 使用 vue 的資料時可能當時還不存在，所以可以利用 created 事件處理函數來完成。
 
 

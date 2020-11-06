@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h1>Edit Chef: {{ id }} </h1>
-    <form @submit.prevent="updatePost">
+    <h1>Edit Chef: {{ id }}</h1>
+    <form @submit.prevent="updateChef">
       <div>
         <div>
           <div>
@@ -32,37 +32,54 @@ import gql from "graphql-tag";
 export default {
   data() {
     return {
-      form:{},
+      form: {}
     };
   },
-  props:{
-    id:""
+  props: ["id"],
+  created: function(){
+    console.log(this.id)
+    this.getChef(this.id)
   },
-  apollo: {
-    form: gql(`
-      query {
-        form:chef(id:`+"\""+"5fa0022c2903b100d0cc75bb"+"\""+`){id,name,rating}
-      },
-    `)
-    /*form: {
-      query: gql(`
-        query PingId($id:String){
-          form:chef(id:$id){id,name,rating}
+  methods: {
+    checkid: function() {
+      alert(this.$props.id);
+    },
+    getChef: async function(id){
+      console.log(`Get Chef: ${id}`);
+      let q= await this.$apollo.query({
+        query: gql`
+          query form($id:ID!) {
+            form: chef(id: $id) {
+              id,
+              name,
+              rating,
+            }
+          }
+        `,
+        variables: {
+          id : id
         },
-      `),
-      variables(){
-        return {
-          id: "5fa0022c2903b100d0cc75bb"
+      })
+      console.log(q)
+      this.form=q.data.form
+    },
+    updateChef: async function(){
+      let m = await this.$apollo.mutate({
+        mutation: gql`
+          mutation updateChef($id: ID!, $input:ChefInput) {
+            msg:updateChef(id: $id, input: $input) {
+              id
+            }
+          }
+        `,
+        variables: {
+          id: this.id,
+          input: {name:this.form.name, rating:parseFloat(this.form.rating)}
         }
-      }
-    }*/
-  },
-  methods:{
-    checkid: function(){
-      alert(this.$props.id)
+      });
+      console.log(m.data.msg)
     }
-  },
-
+  }
 };
 </script>
 
