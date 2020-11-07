@@ -78,6 +78,7 @@ export default {
         }
       });
       console.log(m.data.msg)
+      window.location.href = '/chefs/';
     }
   }
 };
