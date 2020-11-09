@@ -2,6 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
 import Dishes from "./views/Dishes.vue";
+import Login from "./views/Login.vue";
 
 Vue.use(Router);
 
@@ -33,6 +34,11 @@ export default new Router({
       path: "/dishes",
       name: "dishes",
       component: Dishes
+    },
+    {
+      path: "/login",
+      name: "login",
+      component: Login
     }
   ]
 });

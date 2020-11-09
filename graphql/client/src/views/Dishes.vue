@@ -24,6 +24,7 @@
         </td>
       </tr>
     </table>
+
     <form>
       <label>Name</label>
       <input type="text" name="name" v-model="name" />

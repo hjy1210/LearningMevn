@@ -1,4 +1,7 @@
+require('dotenv').config();
 const express = require('express');
+const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser')
 const {graphqlHTTP} = require('express-graphql');
 
 const mongo = require('mongoose');
@@ -17,15 +20,41 @@ const loggingMiddleware = (req, res, next) => {
 	next();
   }
 const cors = require('cors');
+
+const jwt = require('jsonwebtoken');
+const exjwt = require('express-jwt');
+const jwtMW = exjwt({
+    secret: process.env.ACCESS_TOKEN_SECRET || "swsh23hjddnns",
+    algorithms: ['HS256'],
+    getToken: function fromHeaderOrQuerystring (req) {
+        if (req.cookies && req.cookies.jwt){
+            return req.cookies.jwt
+        }
+        else if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
+            return req.headers.authorization.split(' ')[1];
+        } else if (req.query && req.query.token) {
+          return req.query.token;
+        }
+        return null;
+      }
+});
+const {login, refresh} = require('./authentication')
+
 const app = express();
 
-require('dotenv').config();
 
 app.use(cors());
 app.use(loggingMiddleware);
 
+app.use(bodyParser.json())
+app.use(cookieParser())
+
+app.post('/login', login)
+app.post('/refresh', refresh)
+
 app.use(
 	'/graphql',
+	// jwtMW,     ///// DONT know to to send cookie in apollo object of client
 	graphqlHTTP({
 		schema: executableSchema,
 		graphiql: true

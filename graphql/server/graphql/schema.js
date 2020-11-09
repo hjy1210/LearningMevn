@@ -29,7 +29,7 @@ var resolvers = {
 		message: (parent, args , context) => {
 			return `express mongoose provide services, context.ip=${context.ip}, context.yang=${context.yang}`
 		},
-		dishes: () => {
+		dishes: (parent, args, context) => {
 			return Dish.find();
 		},
 		chefs: () => {
