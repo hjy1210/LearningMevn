@@ -12,13 +12,17 @@ mongo.connection.once('open', () => {
 const modelschema = require('./graphql/modelschema')
 
 const {executableSchema} = require('./graphql/schema');
-
+const loggingMiddleware = (req, res, next) => {
+	req.yang="楊"
+	next();
+  }
 const cors = require('cors');
 const app = express();
 
 require('dotenv').config();
 
 app.use(cors());
+app.use(loggingMiddleware);
 
 app.use(
 	'/graphql',

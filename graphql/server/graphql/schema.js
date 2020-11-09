@@ -26,8 +26,8 @@ let typeDefs = importSchema(path.join(__dirname, './index.graphql'));
 // The root provides a resolver function for each API endpoint
 var resolvers = {
 	Query: {
-		message: () => {
-			return 'express mongoose provide services';
+		message: (parent, args , context) => {
+			return `express mongoose provide services, context.ip=${context.ip}, context.yang=${context.yang}`
 		},
 		dishes: () => {
 			return Dish.find();
