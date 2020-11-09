@@ -13,7 +13,7 @@
 
       <button>Create</button>
     </form>
-
+      <button @click="getCookie">Get Cookie </button>
   </center>
 </template>
 
@@ -28,12 +28,19 @@ export default {
   methods: {
     login() {
       const uri = 'http://localhost:9000/login'
-      axios.post(uri, this.form, {withCredentials: true}).then(() => {
+      axios.post(uri, this.form, {withCredentials: true}).then((res) => {
         //  /// https://nuxtjs.org/examples/custom-page-loading
         //  /// https://router.vuejs.org/guide/essentials/navigation.html
         //this.$router.push({ name: 'users' })
+        console.log(`res=${JSON.stringify(res)}`)
+        console.log(res.headers)
+        console.log(res.data)
+        document.cookie = "jwt="+res.data;
       })
     },
+    getCookie(){
+      console.log("("+document.cookie+")")
+    }
   },
 
 };

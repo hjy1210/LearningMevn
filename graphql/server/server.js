@@ -43,7 +43,11 @@ const {login, refresh} = require('./authentication')
 const app = express();
 
 
-app.use(cors());
+app.use(cors({
+  origin: 'http://192.168.0.6:3002',
+  credentials: true,
+  exposedHeaders: ["Set-Cookie"]
+}));
 app.use(loggingMiddleware);
 
 app.use(bodyParser.json())
@@ -54,7 +58,7 @@ app.post('/refresh', refresh)
 
 app.use(
 	'/graphql',
-	// jwtMW,     ///// DONT know to to send cookie in apollo object of client
+	jwtMW,     ///// DONT know to to send cookie in apollo object of client
 	graphqlHTTP({
 		schema: executableSchema,
 		graphiql: true

@@ -40,7 +40,7 @@ exports.login = function(req, res) {
 
 	//send the access token to the client inside a cookie
 	res.cookie('jwt', accessToken, { secure: false, httpOnly: true });
-	res.send();
+	res.send(accessToken);
 };
 
 exports.refresh = function (req, res){

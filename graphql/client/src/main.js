@@ -16,7 +16,8 @@ const httpLink = new HttpLink({
 // create the apollo client
 const apolloClient = new ApolloClient({
   link: httpLink,
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
+  credentials: 'include'
 });
 
 const apolloProvider = new VueApollo({
