@@ -31,7 +31,8 @@ const jwtMW = exjwt({
             return req.cookies.jwt
         }
         else if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
-            return req.headers.authorization.split(' ')[1];
+            let token = req.headers.authorization.split(' ')[1].split('=')[1];
+            return token
         } else if (req.query && req.query.token) {
           return req.query.token;
         }

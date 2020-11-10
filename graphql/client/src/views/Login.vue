@@ -14,6 +14,7 @@
       <button>Create</button>
     </form>
       <button @click="getCookie">Get Cookie </button>
+      <p> {{msg}} </p>
   </center>
 </template>
 
@@ -22,7 +23,8 @@ const axios = require('axios')
 export default {
   data() {
     return {
-      form:{}
+      form:{},
+      msg:'Answer'
     };
   },
   methods: {
@@ -40,6 +42,24 @@ export default {
     },
     getCookie(){
       console.log("("+document.cookie+")")
+      // https://medium.com/acmvit/handling-cookies-with-axios-872790241a9b
+      // https://github.com/axios/axios
+      axios.post(
+        "http://localhost:9000/graphql",
+        {
+          query: `query abcd
+            {
+              dishes
+              {id,name,country}
+            }
+          `
+        },{
+          headers: {Authorization: `Bearer ${document.cookie}`}
+        }
+      ).then(result => {
+        this.$data.msg=result.data
+        //alert(JSON.stringify(result.data));
+      })
     }
   },
 
