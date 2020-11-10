@@ -16,7 +16,7 @@ const modelschema = require('./graphql/modelschema')
 
 const {executableSchema} = require('./graphql/schema');
 const loggingMiddleware = (req, res, next) => {
-	req.yang="楊"
+	req.yang="楊"+((req.cookies && req.cookies.jwt)?req.cookies.jwt:"")
 	next();
   }
 const cors = require('cors');
@@ -44,14 +44,14 @@ const app = express();
 
 
 app.use(cors({
-  origin: 'http://192.168.0.6:3002',
+  origin: 'http://192.168.0.6:3002',   ///// http://localhost:3002 並不相同 CORS 問題
   credentials: true,
   exposedHeaders: ["Set-Cookie"]
 }));
-app.use(loggingMiddleware);
-
 app.use(bodyParser.json())
 app.use(cookieParser())
+app.use(loggingMiddleware);
+
 
 app.post('/login', login)
 app.post('/refresh', refresh)

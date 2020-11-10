@@ -10,7 +10,8 @@ Vue.config.productionTip = false;
 
 const httpLink = new HttpLink({
   // URL to graphql server, you should use an absolute URL here
-  uri: "http://localhost:9000/graphql"
+  uri: "http://localhost:9000/graphql",
+  credentials:"include"
 });
 
 // create the apollo client
