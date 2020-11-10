@@ -13,7 +13,7 @@
 
       <button>Create</button>
     </form>
-      <button @click="getCookie">Get Cookie </button>
+      <!--<button @click="getCookie">Get Cookie </button>-->
       <p> {{msg}} </p>
   </center>
 </template>
@@ -24,7 +24,7 @@ export default {
   data() {
     return {
       form:{},
-      msg:'Answer'
+      msg:''
     };
   },
   methods: {
@@ -57,8 +57,8 @@ export default {
           headers: {Authorization: `Bearer ${document.cookie}`}
         }
       ).then(result => {
-        this.$data.msg=result.data
-        //alert(JSON.stringify(result.data));
+        this.$data.msg=result.data.data.dishes
+        //alert(JSON.stringify(result.data.data.dishes));
       })
     }
   },

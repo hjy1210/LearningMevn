@@ -48,12 +48,14 @@
       />
       <input type="button" @click="clearForm()" value="Clear" />
     </form>
+    <!--<button @click.prevent="getDishes">Get Dishes</button>-->
   </div>
 </template>
 
 <script>
 // import HelloWorld from "./components/HelloWorld.vue";
 import gql from "graphql-tag";
+const axios = require('axios')
 
 export default {
   name: "App",
@@ -61,43 +63,50 @@ export default {
     return {
       id: null,
       name: "",
-      country: ""
+      country: "",
+      dishes:[]
     };
   },
-  apollo: {
-    dishes: gql`
-      query {
-        dishes {
-          id
-          name
-          country
-        }
-      }
-    `
+  created(){
+    this.getDishes()
   },
   methods: {
     addDish(name, country) {
       console.log(`Create Dish: ${name}`);
-      this.$apollo.mutate({
-        mutation: gql`
-          mutation addDish($input: DishInput) {
-            addDish(input: $input) {
-              id
-              name
-              country
+      // alert("("+document.cookie+")")
+      // alert(`${name},${country}`)
+      axios.post(
+        "http://localhost:9000/graphql",
+        {
+          query: `
+            mutation addDishShell($input: DishInput) {
+              addDish(input: $input) {
+                id
+                name
+                country
+              }
             }
+          `,
+          variables: {
+            input: { name: name, country: country }
           }
-        `,
-        variables: {
-          input: { name: name, country: country }
+        },
+        {
+          headers: {Authorization: `Bearer ${document.cookie}`}
         }
-      });
+      ).then((result)=>{
+        //alert(JSON.stringify(result.data))
+      }).catch(err=>{
+        alert(JSON.stringify(err))
+      })
       location.reload();
     },
     updateDish(id, name, country) {
       console.log(`Update contact: # ${id}`);
-      this.$apollo.mutate({
-        mutation: gql`
+      axios.post(
+        "http://localhost:9000/graphql",
+        {
+          query: `
           mutation updateDish($id: ID!, $input: DishInput) {
             updateDish(id: $id, input: $input) {
               id
@@ -105,28 +114,46 @@ export default {
               country
             }
           }
-        `,
-        variables: {
-          id: id,
-          input: { name: name, country: country }
+          `,
+          variables: {
+            id: id,
+            input: { name: name, country: country }
+          }
+        },
+        {
+          headers: {Authorization: `Bearer ${document.cookie}`}
         }
-      });
+      ).then((result)=>{
+        // alert(JSON.stringify(result.data))
+      }).catch(err=>{
+        alert(JSON.stringify(err))
+      })
       location.reload();
     },
     deleteDish(id) {
       console.log(`Delete dish: # ${id}`);
-      this.$apollo.mutate({
-        mutation: gql`
-          mutation deleteDish($id: ID!) {
-            deleteDish(id: $id) {
-              id
+      axios.post(
+        "http://localhost:9000/graphql",
+        {
+          query: `
+            mutation deleteDish($id: ID!) {
+              deleteDish(id: $id) {
+                id
+              }
             }
+          `,
+          variables: {
+            id: id
           }
-        `,
-        variables: {
-          id: id
+        },
+        {
+          headers: {Authorization: `Bearer ${document.cookie}`}
         }
-      });
+      ).then((result)=>{
+        //alert(JSON.stringify(result.data))
+      }).catch(err=>{
+        alert(JSON.stringify(err))
+      })
       location.reload();
     },
     selectDish(dish) {
@@ -138,6 +165,26 @@ export default {
       this.id = null;
       this.name = "";
       this.country = "";
+    },
+    getDishes(){
+      //alert(`${document.cookie}`)
+      axios.post(
+        "http://localhost:9000/graphql",
+        {
+          query: `query abcd
+            {
+              dishes
+              {id,name,country}
+            }
+          `
+        },{
+          headers: {Authorization: `Bearer ${document.cookie}`}
+        }
+      ).then(result => {
+        this.$data.dishes=result.data.data.dishes
+        //alert(result.data.data.dishes);
+      })
+
     }
   }
 };
