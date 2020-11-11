@@ -45,7 +45,8 @@ const app = express();
 
 
 app.use(cors({
-  origin: ['http://192.168.0.6:3002','http://192.168.0.6:8080','http://192.168.0.6'],   ///// http://localhost:3002 並不相同 CORS 問題
+  origin: ['http://192.168.0.6:3002','http://192.168.0.6:8080','http://192.168.0.6',
+    'https://192.168.0.6:3002','https://192.168.0.6:8080','https://192.168.0.6'],   ///// http://localhost:3002 並不相同 CORS 問題
   credentials: true,
   exposedHeaders: ["Set-Cookie"]
 }));
