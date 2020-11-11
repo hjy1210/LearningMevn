@@ -9,7 +9,7 @@
 // @ is an alias to /src
 import HelloWorld from "@/components/HelloWorld.vue";
 
-import gql from "graphql-tag";
+const axios = require('axios')
 
 export default {
   data() {
@@ -17,13 +17,25 @@ export default {
       message: "abcd"
     };
   },
-  apollo: {
-    // Simple query that will update the 'hello' vue property
-    message: gql`
-      query {
-        message
-      }
-    `
+  created(){
+    axios.post(
+        "http://localhost:9000/graphql",
+        {
+          query: `
+            {
+              message
+            }
+          `
+        },
+        {
+          headers: {Authorization: `Bearer ${document.cookie}`}
+        }
+    ).then(result=>{
+      console.log(result.data.data.message)
+      this.$data.message=result.data.data.message
+    }).catch(err=>{
+      console.log(err)
+    })
   },
   name: "home",
   components: {

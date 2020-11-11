@@ -1,78 +1,204 @@
+<!--<template>
+  <div id="app">
+    <img alt="Vue logo" src="./assets/logo.png" />
+    <HelloWorld msg="Welcome to Your Vue.js App" />
+  </div>
+</template>-->
 <template>
-  <div>
-    <h1>This is a page about {{ message }}</h1>
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Rating</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="chef in chefs" :key="chef.id">
-          <td>{{ chef.id }}</td>
-          <td>{{ chef.name }}</td>
-          <td>{{ chef.rating }}</td>
-          <td>
-            <router-link :to="'/chef/edit/' + chef.id" class="button--green"
-              >Edit</router-link
-            >
-          </td>
-          <td><button @click.prevent="deleteChef(chef.id)">Delete</button></td>
-        </tr>
-      </tbody>
+  <div id="app">
+    <table border="1" width="100%" style="border-collapse: collapse">
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>rating</th>
+        <th>Actions</th>
+      </tr>
+
+      <tr v-for="chef in chefs" :key="chef.id">
+        <td>{{ chef.id }}</td>
+        <td>{{ chef.name }}</td>
+        <td>{{ chef.rating }}</td>
+        <td>
+          <input type="button" @click="selectChef(chef)" value="Select" />
+          <input type="button" @click="deleteChef(chef.id)" value="Delete" />
+        </td>
+      </tr>
     </table>
+
+    <form>
+      <label>Name</label>
+      <input type="text" name="name" v-model="name" />
+      <br />
+
+      <label>rating</label>
+      <input type="text" name="rating" v-model="rating" />
+      <br />
+
+      <input
+        v-if="!id"
+        type="button"
+        @click="addChef(name, rating)"
+        value="Add"
+      />
+      <input
+        v-if="id"
+        type="button"
+        @click="updateChef(id, name, rating)"
+        value="Update"
+      />
+      <input type="button" @click="clearForm()" value="Clear" />
+    </form>
+    <!--<button @click.prevent="getDishes">Get Dishes</button>-->
   </div>
 </template>
 
 <script>
+// import HelloWorld from "./components/HelloWorld.vue";
 import gql from "graphql-tag";
+const axios = require('axios')
+
 export default {
+  name: "Chefs",
   data() {
     return {
-      message: "abcd",
-      chefs: [
-        { id: 1, name: "Yang", rating: 3.14 },
-        { id: 2, name: "Huang", rating: 2.71 }
-      ]
+      id: null,
+      name: "",
+      rating: "",
+      chefs:[]
     };
   },
-  methods:{
-    deleteChef(id) {
-      console.log(`Delete chef: # ${id}`);
-      this.$apollo.mutate({
-        mutation: gql`
-          mutation deleteChef($id: ID!) {
-            deleteChef(id: $id){
-              id
+  created(){
+    this.getChefs()
+  },
+  methods: {
+    addChef(name, rating) {
+      console.log(`Create Chef: ${name}`);
+      // alert("("+document.cookie+")")
+      // alert(`${name},${country}`)
+      axios.post(
+        "http://localhost:9000/graphql",
+        {
+          query: `
+            mutation addChefShell($input: ChefInput) {
+              addChef(input: $input) {
+                id
+                name
+                rating
+              }
             }
+          `,
+          variables: {
+            input: { name: name, rating: parseFloat(rating) }
           }
-        `,
-        variables: {
-          id: id,
         },
-      });
+        {
+          headers: {Authorization: `Bearer ${document.cookie}`}
+        }
+      ).then((result)=>{
+        alert(JSON.stringify(result.data))
+      }).catch(err=>{
+        alert(JSON.stringify(err))
+      })
       location.reload();
     },
-
-  },
-  apollo: {
-    // Simple query that will update the 'hello' vue property
-    message: gql`
-      query {
-        message
-      }
-    `,
-    chefs: gql`
-      query {
-        chefs {
-          id
-          name
-          rating
+    updateChef(id, name, rating) {
+      console.log(`Update Chef: # ${id}`);
+      axios.post(
+        "http://localhost:9000/graphql",
+        {
+          query: `
+          mutation updateChef($id: ID!, $input: ChefInput) {
+            updateChef(id: $id, input: $input) {
+              id
+              name
+              rating
+            }
+          }
+          `,
+          variables: {
+            id: id,
+            input: { name: name , rating: parseFloat(rating)}
+          }
+        },
+        {
+          headers: {Authorization: `Bearer ${document.cookie}`}
         }
-      }
-    `
+      ).then((result)=>{
+        alert(JSON.stringify(result.data))
+      }).catch(err=>{
+        alert(JSON.stringify(err))
+      })
+      location.reload();
+    },
+    deleteChef(id) {
+      console.log(`Delete chef: # ${id}`);
+      axios.post(
+        "http://localhost:9000/graphql",
+        {
+          query: `
+            mutation deleteChefShell($id: ID!) {
+              deleteChef(id: $id) {
+                id
+              }
+            }
+          `,
+          variables: {
+            id: id
+          }
+        },
+        {
+          headers: {Authorization: `Bearer ${document.cookie}`}
+        }
+      ).then((result)=>{
+        alert(JSON.stringify(result.data))
+      }).catch(err=>{
+        alert(JSON.stringify(err))
+      })
+      location.reload();
+    },
+    selectChef(chef) {
+      this.id = chef.id;
+      this.name = chef.name;
+      this.rating = chef.rating;
+    },
+    clearForm() {
+      this.id = null;
+      this.name = "";
+      this.rating = 0;
+    },
+    getChefs(){
+      //alert(`${document.cookie}`)
+      axios.post(
+        "http://localhost:9000/graphql",
+        {
+          query: `query abcd
+            {
+              chefs
+              {id,name,rating}
+            }
+          `
+        },{
+          headers: {Authorization: `Bearer ${document.cookie}`}
+        }
+      ).then(result => {
+        this.$data.chefs=result.data.data.chefs
+        //alert(result.data.data.dishes);
+      })
+
+    }
   }
 };
 </script>
+
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+</style>
+
+<style scoped></style>
