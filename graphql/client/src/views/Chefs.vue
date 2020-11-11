@@ -73,8 +73,8 @@ export default {
   methods: {
     addChef(name, rating) {
       console.log(`Create Chef: ${name}`);
-      // alert("("+document.cookie+")")
-      // alert(`${name},${country}`)
+      // console.log("("+document.cookie+")")
+      // console.log(`${name},${country}`)
       axios.post(
         "http://localhost:9000/graphql",
         {
@@ -95,11 +95,13 @@ export default {
           headers: {Authorization: `Bearer ${document.cookie}`}
         }
       ).then((result)=>{
-        alert(JSON.stringify(result.data))
+        console.log(JSON.stringify(result.data))
+        this.clearForm()
+        this.getChefs()
       }).catch(err=>{
-        alert(JSON.stringify(err))
+        console.log(JSON.stringify(err))
       })
-      location.reload();
+      // location.reload();
     },
     updateChef(id, name, rating) {
       console.log(`Update Chef: # ${id}`);
@@ -124,11 +126,13 @@ export default {
           headers: {Authorization: `Bearer ${document.cookie}`}
         }
       ).then((result)=>{
-        alert(JSON.stringify(result.data))
+        console.log(JSON.stringify(result.data))
+        this.clearForm()
+        this.getChefs()
       }).catch(err=>{
-        alert(JSON.stringify(err))
+        console.log(JSON.stringify(err))
       })
-      location.reload();
+      //location.reload();
     },
     deleteChef(id) {
       console.log(`Delete chef: # ${id}`);
@@ -150,11 +154,13 @@ export default {
           headers: {Authorization: `Bearer ${document.cookie}`}
         }
       ).then((result)=>{
-        alert(JSON.stringify(result.data))
+        console.log(JSON.stringify(result.data))
+        this.clearForm()
+        this.getChefs()
       }).catch(err=>{
-        alert(JSON.stringify(err))
+        console.log(JSON.stringify(err))
       })
-      location.reload();
+      //location.reload();
     },
     selectChef(chef) {
       this.id = chef.id;
@@ -164,10 +170,10 @@ export default {
     clearForm() {
       this.id = null;
       this.name = "";
-      this.rating = 0;
+      this.rating = "";
     },
     getChefs(){
-      //alert(`${document.cookie}`)
+      //console.log(`${document.cookie}`)
       axios.post(
         "http://localhost:9000/graphql",
         {
@@ -182,7 +188,7 @@ export default {
         }
       ).then(result => {
         this.$data.chefs=result.data.data.chefs
-        //alert(result.data.data.dishes);
+        //console.log(result.data.data.dishes);
       })
 
     }

@@ -252,4 +252,10 @@ Dishes.vue 實作了CRUD。
 
 考量Vue Component 裡面程式片段的執行順序有先有後，須注意$apollo 使用 vue 的資料時可能當時還不存在，所以可以利用 created 事件處理函數來完成。
 
+## Authenticate with jwt
+* [A Brief Introduction to Securing Applications with JWT](https://livecodestream.dev/post/2020-07-31-a-brief-introduction-to-securing-applications-with-jwt/)
+* [A Practical Guide to JWT Authentication with NodeJS](https://livecodestream.dev/post/2020-08-11-a-practical-guide-to-jwt-authentication-with-nodejs/)
+* [express-jwt(example)](https://harshitpant.com/blog/using-json-web-token-for-authentication)
+* [express-jwt(github)](https://github.com/auth0/express-jwt)
 
+因為不知 apollo client 如何傳遞 token，改用 axios 來呼叫 GraphQL API。 

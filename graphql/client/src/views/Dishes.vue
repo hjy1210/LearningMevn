@@ -54,7 +54,7 @@
 
 <script>
 // import HelloWorld from "./components/HelloWorld.vue";
-import gql from "graphql-tag";
+// import gql from "graphql-tag";
 const axios = require('axios')
 
 export default {
@@ -73,8 +73,8 @@ export default {
   methods: {
     addDish(name, country) {
       console.log(`Create Dish: ${name}`);
-      // alert("("+document.cookie+")")
-      // alert(`${name},${country}`)
+      // console.log("("+document.cookie+")")
+      // console.log(`${name},${country}`)
       axios.post(
         "http://localhost:9000/graphql",
         {
@@ -95,11 +95,13 @@ export default {
           headers: {Authorization: `Bearer ${document.cookie}`}
         }
       ).then((result)=>{
-        //alert(JSON.stringify(result.data))
+        this.clearForm()
+        this.getDishes()
+        console.log(JSON.stringify(result.data))
       }).catch(err=>{
-        alert(JSON.stringify(err))
+        console.log(JSON.stringify(err))
       })
-      location.reload();
+      // location.reload();
     },
     updateDish(id, name, country) {
       console.log(`Update contact: # ${id}`);
@@ -124,11 +126,13 @@ export default {
           headers: {Authorization: `Bearer ${document.cookie}`}
         }
       ).then((result)=>{
-        // alert(JSON.stringify(result.data))
+        this.clearForm()
+        this.getDishes()
+        console.log(JSON.stringify(result.data))
       }).catch(err=>{
-        alert(JSON.stringify(err))
+        console.log(JSON.stringify(err))
       })
-      location.reload();
+      // location.reload();
     },
     deleteDish(id) {
       console.log(`Delete dish: # ${id}`);
@@ -150,11 +154,13 @@ export default {
           headers: {Authorization: `Bearer ${document.cookie}`}
         }
       ).then((result)=>{
-        //alert(JSON.stringify(result.data))
+        this.clearForm()
+        this.getDishes()
+        console.log(JSON.stringify(result.data))
       }).catch(err=>{
-        alert(JSON.stringify(err))
+        console.log(JSON.stringify(err))
       })
-      location.reload();
+      // location.reload();
     },
     selectDish(dish) {
       this.id = dish.id;
@@ -167,7 +173,7 @@ export default {
       this.country = "";
     },
     getDishes(){
-      //alert(`${document.cookie}`)
+      //console.log(`${document.cookie}`)
       axios.post(
         "http://localhost:9000/graphql",
         {
@@ -182,7 +188,7 @@ export default {
         }
       ).then(result => {
         this.$data.dishes=result.data.data.dishes
-        //alert(result.data.data.dishes);
+        //console.log(result.data.data.dishes);
       })
 
     }
