@@ -259,3 +259,6 @@ Dishes.vue 實作了CRUD。
 * [express-jwt(github)](https://github.com/auth0/express-jwt)
 
 因為不知 apollo client 如何傳遞 token，改用 axios 來呼叫 GraphQL API。 
+
+## MathJax 3
+[MathJax V.3.X](http://docs.mathjax.org/en/latest/web/typeset.html#web-typeset) 的排版有相當的改變，MathJax.Hub.Queue 不見了，取而代之的是 MathJax.typeset 與 MathJax.typesetPromise。據此，製作了 mathjaxcomp.vue， 可用來輸入數學文章進行排版。

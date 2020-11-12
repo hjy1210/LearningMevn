@@ -6,6 +6,9 @@
 </template>-->
 <template>
   <div id="app">
+    <mathjaxcomp></mathjaxcomp>
+    <mathjaxcomp></mathjaxcomp>
+
     <table border="1" width="100%" style="border-collapse: collapse">
       <tr>
         <th>ID</th>
@@ -54,8 +57,9 @@
 
 <script>
 // import HelloWorld from "./components/HelloWorld.vue";
+import mathjaxcomp from "../components/mathjaxcomp";
 import gql from "graphql-tag";
-const axios = require('axios')
+const axios = require("axios");
 
 export default {
   name: "Chefs",
@@ -64,21 +68,25 @@ export default {
       id: null,
       name: "",
       rating: "",
-      chefs:[]
+      chefs: [],
     };
   },
-  created(){
-    this.getChefs()
+  created() {
+    this.getChefs();
+  },
+  components: {
+    mathjaxcomp,
   },
   methods: {
     addChef(name, rating) {
       console.log(`Create Chef: ${name}`);
       // console.log("("+document.cookie+")")
       // console.log(`${name},${country}`)
-      axios.post(
-        "http://localhost:9000/graphql",
-        {
-          query: `
+      axios
+        .post(
+          "http://localhost:9000/graphql",
+          {
+            query: `
             mutation addChefShell($input: ChefInput) {
               addChef(input: $input) {
                 id
@@ -87,28 +95,31 @@ export default {
               }
             }
           `,
-          variables: {
-            input: { name: name, rating: parseFloat(rating) }
+            variables: {
+              input: { name: name, rating: parseFloat(rating) },
+            },
+          },
+          {
+            headers: { Authorization: `Bearer ${document.cookie}` },
           }
-        },
-        {
-          headers: {Authorization: `Bearer ${document.cookie}`}
-        }
-      ).then((result)=>{
-        console.log(JSON.stringify(result.data))
-        this.clearForm()
-        this.getChefs()
-      }).catch(err=>{
-        console.log(JSON.stringify(err))
-      })
+        )
+        .then((result) => {
+          console.log(JSON.stringify(result.data));
+          this.clearForm();
+          this.getChefs();
+        })
+        .catch((err) => {
+          console.log(JSON.stringify(err));
+        });
       // location.reload();
     },
     updateChef(id, name, rating) {
       console.log(`Update Chef: # ${id}`);
-      axios.post(
-        "http://localhost:9000/graphql",
-        {
-          query: `
+      axios
+        .post(
+          "http://localhost:9000/graphql",
+          {
+            query: `
           mutation updateChef($id: ID!, $input: ChefInput) {
             updateChef(id: $id, input: $input) {
               id
@@ -117,49 +128,54 @@ export default {
             }
           }
           `,
-          variables: {
-            id: id,
-            input: { name: name , rating: parseFloat(rating)}
+            variables: {
+              id: id,
+              input: { name: name, rating: parseFloat(rating) },
+            },
+          },
+          {
+            headers: { Authorization: `Bearer ${document.cookie}` },
           }
-        },
-        {
-          headers: {Authorization: `Bearer ${document.cookie}`}
-        }
-      ).then((result)=>{
-        console.log(JSON.stringify(result.data))
-        this.clearForm()
-        this.getChefs()
-      }).catch(err=>{
-        console.log(JSON.stringify(err))
-      })
+        )
+        .then((result) => {
+          console.log(JSON.stringify(result.data));
+          this.clearForm();
+          this.getChefs();
+        })
+        .catch((err) => {
+          console.log(JSON.stringify(err));
+        });
       //location.reload();
     },
     deleteChef(id) {
       console.log(`Delete chef: # ${id}`);
-      axios.post(
-        "http://localhost:9000/graphql",
-        {
-          query: `
+      axios
+        .post(
+          "http://localhost:9000/graphql",
+          {
+            query: `
             mutation deleteChefShell($id: ID!) {
               deleteChef(id: $id) {
                 id
               }
             }
           `,
-          variables: {
-            id: id
+            variables: {
+              id: id,
+            },
+          },
+          {
+            headers: { Authorization: `Bearer ${document.cookie}` },
           }
-        },
-        {
-          headers: {Authorization: `Bearer ${document.cookie}`}
-        }
-      ).then((result)=>{
-        console.log(JSON.stringify(result.data))
-        this.clearForm()
-        this.getChefs()
-      }).catch(err=>{
-        console.log(JSON.stringify(err))
-      })
+        )
+        .then((result) => {
+          console.log(JSON.stringify(result.data));
+          this.clearForm();
+          this.getChefs();
+        })
+        .catch((err) => {
+          console.log(JSON.stringify(err));
+        });
       //location.reload();
     },
     selectChef(chef) {
@@ -172,27 +188,29 @@ export default {
       this.name = "";
       this.rating = "";
     },
-    getChefs(){
+    getChefs() {
       //console.log(`${document.cookie}`)
-      axios.post(
-        "http://localhost:9000/graphql",
-        {
-          query: `query abcd
+      axios
+        .post(
+          "http://localhost:9000/graphql",
+          {
+            query: `query abcd
             {
               chefs
               {id,name,rating}
             }
-          `
-        },{
-          headers: {Authorization: `Bearer ${document.cookie}`}
-        }
-      ).then(result => {
-        this.$data.chefs=result.data.data.chefs
-        //console.log(result.data.data.dishes);
-      })
-
-    }
-  }
+          `,
+          },
+          {
+            headers: { Authorization: `Bearer ${document.cookie}` },
+          }
+        )
+        .then((result) => {
+          this.$data.chefs = result.data.data.chefs;
+          //console.log(result.data.data.dishes);
+        });
+    },
+  },
 };
 </script>
 
