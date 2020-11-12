@@ -24,7 +24,7 @@ exports.login = function(req, res) {
         process.env.ACCESS_TOKEN_SECRET || "swsh23hjddnns", 
         {
 		algorithm: 'HS256',
-		expiresIn: process.env.ACCESS_TOKEN_LIFE || "12000000"
+		expiresIn: process.env.ACCESS_TOKEN_LIFE || "120000000"
 	});
 	
 	let payload2 = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET || "swsh23hjddnns")
@@ -32,7 +32,7 @@ exports.login = function(req, res) {
 	//create the refresh token with the longer lifespan
 	let refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET || "dhw782wujnd99ahmmakhanjkajikhiwn2n", {
 		algorithm: 'HS256',
-		expiresIn: process.env.REFRESH_TOKEN_LIFE || "86400000"
+		expiresIn: process.env.REFRESH_TOKEN_LIFE || "86400000000"
 	});
 
 	//store the refresh token in the user array

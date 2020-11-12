@@ -6,6 +6,9 @@
 </template>-->
 <template>
   <div id="app">
+    <p>\(\ce{H2SO4}\)</p>
+    <p>\(\pu{1.02e-23}\)</p>
+    <p>\(x=\frac{-b\pm \sqrt{b^2-4ac}}{2a}\)</p>
     <table border="1" width="100%" style="border-collapse: collapse">
       <tr>
         <th>ID</th>
@@ -48,15 +51,23 @@
       />
       <input type="button" @click="clearForm()" value="Clear" />
     </form>
+    <p>
+      <span>&lbrace; &lbrace;}} {{ country }} </span>
+      <span class="mathjax-output">v-html</span><span v-html="country"></span>
+    </p>
+    <button @click="typeset">TypeSet</button>
     <!--<button @click.prevent="getDishes">Get Dishes</button>-->
   </div>
 </template>
+<script id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script type="text/x-mathjax-config">
+      MathJax.Hub.Config({ TeX: { extensions: ["mhchem.js"] ,mhchem:{legacy:false}}});
+</script>
 
 <script>
 // import HelloWorld from "./components/HelloWorld.vue";
 // import gql from "graphql-tag";
-const axios = require('axios')
-
+const axios = require("axios");
 export default {
   name: "App",
   data() {
@@ -64,21 +75,22 @@ export default {
       id: null,
       name: "",
       country: "",
-      dishes:[]
+      dishes: [],
     };
   },
-  created(){
-    this.getDishes()
+  created() {
+    this.getDishes();
   },
   methods: {
     addDish(name, country) {
       console.log(`Create Dish: ${name}`);
       // console.log("("+document.cookie+")")
       // console.log(`${name},${country}`)
-      axios.post(
-        "http://localhost:9000/graphql",
-        {
-          query: `
+      axios
+        .post(
+          "http://localhost:9000/graphql",
+          {
+            query: `
             mutation addDishShell($input: DishInput) {
               addDish(input: $input) {
                 id
@@ -87,28 +99,31 @@ export default {
               }
             }
           `,
-          variables: {
-            input: { name: name, country: country }
+            variables: {
+              input: { name: name, country: country },
+            },
+          },
+          {
+            headers: { Authorization: `Bearer ${document.cookie}` },
           }
-        },
-        {
-          headers: {Authorization: `Bearer ${document.cookie}`}
-        }
-      ).then((result)=>{
-        this.clearForm()
-        this.getDishes()
-        console.log(JSON.stringify(result.data))
-      }).catch(err=>{
-        console.log(JSON.stringify(err))
-      })
+        )
+        .then((result) => {
+          this.clearForm();
+          this.getDishes();
+          console.log(JSON.stringify(result.data));
+        })
+        .catch((err) => {
+          console.log(JSON.stringify(err));
+        });
       // location.reload();
     },
     updateDish(id, name, country) {
       console.log(`Update contact: # ${id}`);
-      axios.post(
-        "http://localhost:9000/graphql",
-        {
-          query: `
+      axios
+        .post(
+          "http://localhost:9000/graphql",
+          {
+            query: `
           mutation updateDish($id: ID!, $input: DishInput) {
             updateDish(id: $id, input: $input) {
               id
@@ -117,49 +132,54 @@ export default {
             }
           }
           `,
-          variables: {
-            id: id,
-            input: { name: name, country: country }
+            variables: {
+              id: id,
+              input: { name: name, country: country },
+            },
+          },
+          {
+            headers: { Authorization: `Bearer ${document.cookie}` },
           }
-        },
-        {
-          headers: {Authorization: `Bearer ${document.cookie}`}
-        }
-      ).then((result)=>{
-        this.clearForm()
-        this.getDishes()
-        console.log(JSON.stringify(result.data))
-      }).catch(err=>{
-        console.log(JSON.stringify(err))
-      })
+        )
+        .then((result) => {
+          this.clearForm();
+          this.getDishes();
+          console.log(JSON.stringify(result.data));
+        })
+        .catch((err) => {
+          console.log(JSON.stringify(err));
+        });
       // location.reload();
     },
     deleteDish(id) {
       console.log(`Delete dish: # ${id}`);
-      axios.post(
-        "http://localhost:9000/graphql",
-        {
-          query: `
+      axios
+        .post(
+          "http://localhost:9000/graphql",
+          {
+            query: `
             mutation deleteDish($id: ID!) {
               deleteDish(id: $id) {
                 id
               }
             }
           `,
-          variables: {
-            id: id
+            variables: {
+              id: id,
+            },
+          },
+          {
+            headers: { Authorization: `Bearer ${document.cookie}` },
           }
-        },
-        {
-          headers: {Authorization: `Bearer ${document.cookie}`}
-        }
-      ).then((result)=>{
-        this.clearForm()
-        this.getDishes()
-        console.log(JSON.stringify(result.data))
-      }).catch(err=>{
-        console.log(JSON.stringify(err))
-      })
+        )
+        .then((result) => {
+          this.clearForm();
+          this.getDishes();
+          console.log(JSON.stringify(result.data));
+        })
+        .catch((err) => {
+          console.log(JSON.stringify(err));
+        });
       // location.reload();
     },
     selectDish(dish) {
@@ -172,27 +192,33 @@ export default {
       this.name = "";
       this.country = "";
     },
-    getDishes(){
+    getDishes() {
       //console.log(`${document.cookie}`)
-      axios.post(
-        "http://localhost:9000/graphql",
-        {
-          query: `query abcd
+      axios
+        .post(
+          "http://localhost:9000/graphql",
+          {
+            query: `query abcd
             {
               dishes
               {id,name,country}
             }
-          `
-        },{
-          headers: {Authorization: `Bearer ${document.cookie}`}
-        }
-      ).then(result => {
-        this.$data.dishes=result.data.data.dishes
-        //console.log(result.data.data.dishes);
-      })
-
-    }
-  }
+          `,
+          },
+          {
+            headers: { Authorization: `Bearer ${document.cookie}` },
+          }
+        )
+        .then((result) => {
+          this.$data.dishes = result.data.data.dishes;
+          //console.log(result.data.data.dishes);
+        });
+        this.typeset()
+    },
+    typeset() {
+      MathJax.typeset();
+    },
+  },
 };
 </script>
 

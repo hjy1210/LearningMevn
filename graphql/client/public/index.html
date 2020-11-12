@@ -4,6 +4,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({ TeX: { extensions: ["mhchem.js"] ,mhchem:{legacy:false}}});
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+ 
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title>client</title>
   </head>
@@ -11,6 +16,9 @@
     <noscript>
       <strong>We're sorry but client doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
+    <p>\(\ce{H2SO4}\)</p>
+    <p>\(\pu{1.02e-23}\)</p>
+    <p>\(x=\frac{-b\pm \sqrt{b^2-4ac}}{2a}\)</p>
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>
