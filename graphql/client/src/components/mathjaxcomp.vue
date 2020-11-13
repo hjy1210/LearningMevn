@@ -33,9 +33,9 @@ export default {
           code();
           return window.MathJax.typesetPromise();
         })
-        .catch((err) => console.log("Typeset failed: " + err.message));
+        .catch(err => console.log("Typeset failed: " + err.message));
       return window.MathJax.startup.promise;
-    },
-  },
+    }
+  }
 };
 </script>

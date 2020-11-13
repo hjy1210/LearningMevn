@@ -59,9 +59,12 @@
     <!--<button @click.prevent="getDishes">Get Dishes</button>-->
   </div>
 </template>
-<script id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script
+  id="MathJax-script"
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+></script>
 <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({ TeX: { extensions: ["mhchem.js"] ,mhchem:{legacy:false}}});
+MathJax.Hub.Config({ TeX: { extensions: ["mhchem.js"] ,mhchem:{legacy:false}}});
 </script>
 
 <script>
@@ -75,7 +78,7 @@ export default {
       id: null,
       name: "",
       country: "",
-      dishes: [],
+      dishes: []
     };
   },
   created() {
@@ -100,19 +103,19 @@ export default {
             }
           `,
             variables: {
-              input: { name: name, country: country },
-            },
+              input: { name: name, country: country }
+            }
           },
           {
-            headers: { Authorization: `Bearer ${document.cookie}` },
+            headers: { Authorization: `Bearer ${document.cookie}` }
           }
         )
-        .then((result) => {
+        .then(result => {
           this.clearForm();
           this.getDishes();
           console.log(JSON.stringify(result.data));
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(JSON.stringify(err));
         });
       // location.reload();
@@ -134,19 +137,19 @@ export default {
           `,
             variables: {
               id: id,
-              input: { name: name, country: country },
-            },
+              input: { name: name, country: country }
+            }
           },
           {
-            headers: { Authorization: `Bearer ${document.cookie}` },
+            headers: { Authorization: `Bearer ${document.cookie}` }
           }
         )
-        .then((result) => {
+        .then(result => {
           this.clearForm();
           this.getDishes();
           console.log(JSON.stringify(result.data));
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(JSON.stringify(err));
         });
       // location.reload();
@@ -165,19 +168,19 @@ export default {
             }
           `,
             variables: {
-              id: id,
-            },
+              id: id
+            }
           },
           {
-            headers: { Authorization: `Bearer ${document.cookie}` },
+            headers: { Authorization: `Bearer ${document.cookie}` }
           }
         )
-        .then((result) => {
+        .then(result => {
           this.clearForm();
           this.getDishes();
           console.log(JSON.stringify(result.data));
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(JSON.stringify(err));
         });
       // location.reload();
@@ -203,22 +206,22 @@ export default {
               dishes
               {id,name,country}
             }
-          `,
+          `
           },
           {
-            headers: { Authorization: `Bearer ${document.cookie}` },
+            headers: { Authorization: `Bearer ${document.cookie}` }
           }
         )
-        .then((result) => {
+        .then(result => {
           this.$data.dishes = result.data.data.dishes;
           //console.log(result.data.data.dishes);
         });
-        this.typeset()
+      this.typeset();
     },
     typeset() {
       MathJax.typeset();
-    },
-  },
+    }
+  }
 };
 </script>
 
