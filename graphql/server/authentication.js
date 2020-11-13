@@ -27,7 +27,11 @@ exports.login = function(req, res) {
 		expiresIn: process.env.ACCESS_TOKEN_LIFE || "120000000"
 	});
 	
-	let payload2 = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET || "swsh23hjddnns")
+    let payload2 = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET || "swsh23hjddnns")
+    
+    var d = new Date(0); // The 0 there is the key, which sets the date to the epoch
+    d.setUTCSeconds(payload2.iat);
+    console.log(d)
 
 	//create the refresh token with the longer lifespan
 	let refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET || "dhw782wujnd99ahmmakhanjkajikhiwn2n", {
