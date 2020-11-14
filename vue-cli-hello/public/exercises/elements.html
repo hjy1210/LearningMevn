@@ -1,0 +1,245 @@
+<!-- Licensed under a BSD license. See license.html for license -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Three.js - Primitives</title>
+    <style>
+    body {
+        margin: 0;
+    }
+    #c {
+        width: 100vw;
+        height: 100vh;
+        display: block;
+    }
+    </style>
+  </head>
+  <body>
+    <h1>Hello World!</h1>
+    <canvas id="c"></canvas>
+  </body>
+<script type="module">
+import * as THREE from './three/build/three.module.js';
+import {msg, createCube, createCube2, generateMagicCube} from './cubeunit.js';
+function main() {
+    const canvas = document.querySelector('#c');
+  const renderer = new THREE.WebGLRenderer({canvas});
+
+  const fov = 40;
+  const aspect = 2;  // the canvas default
+  const near = 0.1;
+  const far = 1000;
+  const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+  camera.position.z = 120;
+
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0xAAAAAA);
+
+  {
+    const color = 0xFFFFFF;
+    const intensity = 1;
+    const light = new THREE.DirectionalLight(color, intensity);
+    light.position.set(-1, 2, 4);
+    scene.add(light);
+  }
+  {
+    const color = 0xFFFFFF;
+    const intensity = 1;
+    const light = new THREE.DirectionalLight(color, intensity);
+    light.position.set(1, -2, -4);
+    scene.add(light);
+  }
+
+  {
+    const color = 0xFFFFFF;
+    const intensity = 1;
+    const light = new THREE.DirectionalLight(color, intensity);
+    light.position.set(-1, 2, -4);
+    scene.add(light);
+  }
+  {
+    const color = 0xFFFFFF;
+    const intensity = 1;
+    const light = new THREE.DirectionalLight(color, intensity);
+    light.position.set(1, -2, 4);
+    scene.add(light);
+  }
+  const objects = [];
+  const spread = 15;
+
+  function addObject(x, y, obj) {
+    obj.position.x = x * spread;
+    obj.position.y = y * spread;
+
+    scene.add(obj);
+    objects.push(obj);
+  }
+
+  function createMaterial() {
+    const material = new THREE.MeshPhongMaterial({
+      side: THREE.DoubleSide,
+    });
+
+    const hue = Math.random();
+    const saturation = 1;
+    const luminance = .5;
+    //material.color.setHSL(hue, saturation, luminance);
+    material.color.setRGB(Math.random(),Math.random(),Math.random());
+    return material;
+  }
+
+  function addSolidGeometry(x, y, geometry) {
+    const mesh = new THREE.Mesh(geometry, createMaterial());
+    addObject(x, y, mesh);
+  }
+  {
+    const width = 8;
+    const height = 8;
+    const depth = 8;
+    addSolidGeometry(-2, 2, new THREE.BoxBufferGeometry(width, height, depth));
+  }
+  {
+    const width = 8;
+    const height = 8;
+    const widthSegments = 1;
+    const heightSegments = 1;
+    const face1 = new THREE.PlaneBufferGeometry(width, height, widthSegments, heightSegments);
+    const mesh1=new THREE.Mesh(face1, createMaterial())
+    const face2 = new THREE.PlaneBufferGeometry(width, height, widthSegments, heightSegments);
+    const mesh2=new THREE.Mesh(face2, createMaterial())
+    mesh2.rotation.y = Math.PI/2;
+    mesh2.position.x = 4;
+    mesh2.position.z = 4;
+    const parent = new THREE.Object3D();
+    parent.add(mesh1);
+    parent.add(mesh2);
+    addObject(-2, 0, parent);
+  }
+  {
+    const cube= createCube("red","green","blue", "yellow", "cyan", "magenta",8);
+    //alert(cube);
+    addObject(-2,1, cube);
+  }
+  {
+    const cube= createCube2([0,1,2,3,4,5],8);
+    addObject(-1,2, cube);
+  }
+
+  {
+    const cube= createCube2([0,1,2,3,4,5],8);
+    cube.rotation.y=Math.PI/2;
+    addObject(-1,1, cube);
+  }
+  {
+    const cube= createCube2([0,1,2,3,4,5],8);
+    cube.rotation.y=Math.PI;
+    addObject(-1,0, cube);
+  }
+  {
+    const cube= createCube2([0,1,2,3,4,5],8);
+    cube.rotation.y=Math.PI*3/2;
+    addObject(-1,-1, cube);
+  }
+  {
+    const cube= createCube2([0,1,2,3,4,5],8);
+    addObject(0,2, cube);
+  }
+
+  {
+    const cube= createCube2([0,1,2,3,4,5],8);
+    cube.rotation.x=Math.PI/2;
+    addObject(0,1, cube);
+  }
+  {
+    const cube= createCube2([0,1,2,3,4,5],8);
+    cube.rotation.x=Math.PI;
+    //cube.applyQuaternion(cube.quaternion);
+    addObject(0,0, cube);
+  }
+  {
+    const cube= createCube2([0,1,2,3,4,5],8);
+    cube.rotation.x=Math.PI*3/2;
+    //const q=cube.quaternion;
+    //cube.applyQuaternion(q);
+    addObject(0,-1, cube);
+  }
+  {
+    const cube= createCube2([0,1,2,3,4,5],8);
+    addObject(1,2, cube);
+  }
+
+  {
+    const cube= createCube2([0,1,2,3,4,5],8);
+    var quaternion = new THREE.Quaternion();
+    quaternion.setFromAxisAngle( new THREE.Vector3( 1, 0, 0 ), Math.PI / 2 );
+    cube.applyQuaternion(quaternion);
+    //cube.applyQuaternion(quaternion);
+    //cube.applyQuaternion(quaternion);
+    addObject(1,1, cube);
+  }
+  {
+    const cube= createCube2([0,1,2,3,4,5],8);
+    var quaternion = new THREE.Quaternion();
+    quaternion.setFromAxisAngle( new THREE.Vector3( 1, 0, 0 ), Math.PI / 2 );
+    cube.applyQuaternion(quaternion);
+    cube.applyQuaternion(quaternion);
+    //cube.applyQuaternion(quaternion);
+    addObject(1,0, cube);
+  }
+  {
+    const cube= createCube2([0,1,2,3,4,5],8);
+    var quaternion = new THREE.Quaternion();
+    quaternion.setFromAxisAngle( new THREE.Vector3( 1, 0, 0 ), Math.PI / 2 );
+    const q= quaternion.clone();
+    console.log(q);
+    console.log(q.clone().multiply(q));
+    console.log(q.clone().multiply(q).multiply(q));
+    console.log(q.clone().multiply(q).multiply(q).multiply(q));
+    
+    cube.applyQuaternion(quaternion);
+    cube.applyQuaternion(quaternion);
+    cube.applyQuaternion(quaternion);
+    addObject(1,-1, cube);
+  }
+
+  function resizeRendererToDisplaySize(renderer) {
+    const canvas = renderer.domElement;
+    const width = canvas.clientWidth;
+    const height = canvas.clientHeight;
+    const needResize = canvas.width !== width || canvas.height !== height;
+    if (needResize) {
+      renderer.setSize(width, height, false);
+    }
+    return needResize;
+  }
+
+  function render(time) {
+    time *= 0.001;
+
+    if (resizeRendererToDisplaySize(renderer)) {
+      const canvas = renderer.domElement;
+      camera.aspect = canvas.clientWidth / canvas.clientHeight;
+      camera.updateProjectionMatrix();
+    }
+
+    /*objects.forEach((obj, ndx) => {
+      const speed = .1 + ndx * .05;
+      const rot = time * speed;
+      obj.rotation.x = rot;
+      obj.rotation.y = rot;
+    });*/
+
+    renderer.render(scene, camera);
+
+    requestAnimationFrame(render);
+  }
+
+  requestAnimationFrame(render);
+
+}
+generateMagicCube();
+//msg("Hello");
+main();
+</script>

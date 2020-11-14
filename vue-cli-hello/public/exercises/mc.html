@@ -1,0 +1,70 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Three.js - Primitives</title>
+  <style>
+    body {
+      font-size: 20pt;
+      margin: 0;
+    }
+
+    button {
+      margin: 5;
+      font-size: 20pt;
+    }
+
+    #c {
+      float: left;
+      width: 50vw;
+      height: 90vh;
+      cursor: crosshair;
+    }
+
+    #c:focus {
+      outline: none;
+    }
+  </style>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+  <!--<p>當畫布聚焦時，用 s 鍵可以在操弄方塊與變化觀看角度兩種模式中變換。</p>-->
+  <canvas id="c" tabindex="0"></canvas><!-- tabindex="0" 讓canvas可以接受鍵盤的輸入-->
+  <h2>操作方法</h2>
+  <p>有兩種模式，當滑鼠為單十字時可轉動單層方塊，當滑鼠為附箭頭十字時可轉動整個塊魔術方塊。
+    當畫布聚焦時，用 s 鍵在兩種模式間進行切換。</p>
+  <p>要轉動單層方塊，在該層的起始面(法向量與轉動向量垂直)按下滑鼠，拖曳至同層終點面(法向量與轉動向量垂直)後鬆開滑鼠。</p>
+  <p>當畫布聚焦時，按 u 鍵復原一轉，按 r 鍵重作一轉。淨走 <span id="dos"></span> 步，退回 <span id="undos"></span> 步。</p>
+  <h2>魔術方塊轉動符號</h2>
+  <p>F、B、R、L、U、B 代表前、後、右、左、上、下層順時針轉90度，f、b、r、l、u、b 代表前、後、右、左、上、下層逆時針轉90度。</p>
+  <p>Fs、Bs、Rs、Ls、Us、Bs 代表前、後、右、左、上、下起第二層順時針轉90度，fs、bs、rs、ls、us、bs 代表前、後、右、左、上、下起第二層逆時針轉90度。</p>
+  <p>所謂的順逆時針，都是面對該面時的角度。</p>
+  <h2>將上層的左前、左後、右後角塊輪調</h2>
+  <p>\(F-r-f-L-F-R-f-l\)</p>
+  <h2>將上層的前、後、右邊塊輪調。</h2>
+  <p>\(F-r-f-rs-F-R-f-Rs\)</p>
+  <h2>將上、前、右的中塊輪調，同時將下、後、左的中塊輪調。</h2>
+  <p>\(fs-Rs-Fs-rs\)</p>
+  <p>下面參考<a href="https://math.berkeley.edu/~hutching/rubik.pdf">hutching的講義</a>，關於commutator很有意思，前面三個方法都屬於commutator。
+  </p>
+  <h2>To rotate the top front left and top front right corners:</h2>
+  <p>\(X=F^{−1}DFLDL^{−1}\)
+    rotates the top front left corner clockwise without disturbing the rest of the top layer.
+    The lower two layers of the cube are messed up.
+  </p>
+  <p>\(Y=U\) moves the top front right corner into the top front left position, and does not affect the lower two
+    layers
+    of the cube.</p>
+  <p> \(X^{−1}=LD^{−1}L^{−1}F^{−1}D^{−1}F\) rotates the top front left corner(formerly the top front right corner)
+    counterclockwise and repairsthe damage to the lower two layers.</p>
+  <p>\(Y^{−1}=U^{−1}\) restores the top layer to its original position.</p>
+  <p>So the commutator \(XYX^{−1}Y^{−1}=
+    (F^{−1}DFLDL^{−1})U(LD^{−1}L^{−1}F^{−1}D^{−1}F)U^{−1}\)
+    rotates the top front left corner clockwise and the top front right corner counterclockwise without disturbing
+    the
+    rest of the cube.</p>
+
+  <script type="module" src="./mc.js"></script>
+  </body>
