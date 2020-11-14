@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>玩弄魔術方塊</h1>
+    <a href="http://people.math.harvard.edu/~jjchen/docs/Group%20Theory%20and%20the%20Rubik's%20Cube.pdf">
+        Group Theory and the Rubik's Cube.pdf
+    </a></br>
+    角方位置編號
+    <ul>
+        <li>0 on the u face of the ufl cubicle</li>
+        <li>1 on the u face of the urf cubicle</li>
+        <li>2 on the u face of the ubr cubicle</li>
+        <li>3 on the u face of the ulb cubicle</li>
+        <li>4 on the d face of the dbl cubicle</li>
+        <li> 5 on the d face of the dlf cubicle</li>
+        <li>6 on the d face of the dfr cubicle</li>
+        <li>7 on the d face of the drb cubicle </li>
+    </ul>
+    邊方位置編號
+    <ul>
+        <li>0 on the u face of the ub cubicle</li>
+        <li>1 on the u face of the ur cubicle</li>
+        <li>2 on the u face of the uf cubicle</li>
+        <li>3 on the u face of the ul cubicle</li>
+        <li>4 on the b face of the lb cubicle</li>
+        <li>5 on the b face of the rb cubicle</li>
+        <li>6 on the f face of the rf cubicle</li>
+        <li>7 on the f face of the lf cubicle</li>
+        <li>8 on the d face of the db cubicle</li>
+        <li>9 on the d face of the dr cubicle</li>
+        <li>10 on the d face of the df cubicle</li>
+        <li>11 on the d face of the dl cubicle</li>
+    </ul>
+    <h2>FrfLFRfl 在三階方塊中，將上層的左前、左後、右後角塊輪調 </h2>
+    <h2>rDDRUUrDDRurDDRurDDRu 在三階方塊中，將上層的前面兩角方對調。</h2>
+    <a href="https://www.youtube.com/watch?v=QyLzSnA8odc">Swap Adjacent Corners</a>
+    <h2>fDFLDlULdlfdFu 在三階方塊中，將上層的前面兩角方各自旋轉。</h2>
+
+    <h2>
+        moves: <input type="text" width="200" value="fDFLDlULdlfdFu" id="moves" /></br>
+        <button id="playButton">execute</button></br>
+        results: <span id="results" /></h2>
+    <script type="module" src="./mcalg.js"></script>
+
+    </body>
+</html>

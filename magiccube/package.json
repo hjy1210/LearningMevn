@@ -1,0 +1,15 @@
+{
+  "name": "magiccube",
+  "version": "1.0.0",
+  "description": "use threejs to implement magic cube application",
+  "main": "index.js",
+  "scripts": {
+    "start": "http-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "three": "^0.122.0"
+  }
+}
