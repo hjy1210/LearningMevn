@@ -1,27 +1,29 @@
 //import * as THREE from './three/build/three.module.js';
 import * as THREE from 'three'
-/*const loader = new THREE.TextureLoader();
-const green = new THREE.MeshBasicMaterial({ map: loader.load('./resources/green.png') })
+const loader = new THREE.TextureLoader();
+const path = require('path');
+// console.log(path.join(__dirname, '/exercises/resources/red.png'))
+//const green = new THREE.MeshBasicMaterial({ map: loader.load('./resources/green.png') })
 const eightcolors = [
 	new THREE.MeshBasicMaterial({ color: 'black' }),
-	new THREE.MeshBasicMaterial({ map: loader.load('./resources/red.png') }),
-	new THREE.MeshBasicMaterial({ map: loader.load('./resources/green.png') }),
-	new THREE.MeshBasicMaterial({ map: loader.load('./resources/yellow.png') }),
-	new THREE.MeshBasicMaterial({ map: loader.load('./resources/blue.png') }),
-	new THREE.MeshBasicMaterial({ map: loader.load('./resources/magenta.png') }),
-	new THREE.MeshBasicMaterial({ map: loader.load('./resources/cyan.png') }),
-	new THREE.MeshBasicMaterial({ map: loader.load('./resources/white.png') })
-];*/
-const eightcolors = [
+	new THREE.MeshBasicMaterial({ map: loader.load(path.join(__dirname, '/exercises/resources/red.png'))}),
+	new THREE.MeshBasicMaterial({ map: loader.load(path.join(__dirname, '/exercises/resources/green.png'))}),
+	new THREE.MeshBasicMaterial({ map: loader.load(path.join(__dirname, '/exercises/resources/yellow.png'))}),
+	new THREE.MeshBasicMaterial({ map: loader.load(path.join(__dirname, '/exercises/resources/blue.png'))}),
+	new THREE.MeshBasicMaterial({ map: loader.load(path.join(__dirname, '/exercises/resources/magenta.png'))}),
+	new THREE.MeshBasicMaterial({ map: loader.load(path.join(__dirname, '/exercises/resources/cyan.png'))}),
+	new THREE.MeshBasicMaterial({ map: loader.load(path.join(__dirname, '/exercises/resources/white.png'))})
+];
+/*const eightcolors = [
 	new THREE.MeshBasicMaterial({ color: 'black' }),
 	new THREE.MeshBasicMaterial({ color: 'red' }),
 	new THREE.MeshBasicMaterial({ color: 'green' }),
 	new THREE.MeshBasicMaterial({ color: 'yellow' }),
-	new THREE.MeshBasicMaterial({ color: 'blue.png' }),
+	new THREE.MeshBasicMaterial({ color: 'blue' }),
 	new THREE.MeshBasicMaterial({ color: 'magenta' }),
 	new THREE.MeshBasicMaterial({ color: 'cyan' }),
 	new THREE.MeshBasicMaterial({ color: 'white'})
-];
+];*/
 
 function createCube(colorindexes,step) {
     const g = new THREE.BoxBufferGeometry(step,step,step);

@@ -6,7 +6,6 @@
     </p>
     <p>撰寫網頁時，必須嚴格遵守Tag正確配對的規矩。</p>
     <canvas
-      id="c"
       tabindex="0"
       ref="mycanvas"
       @mousedown="this.onMouseClick"
@@ -17,10 +16,8 @@
     <h2>選定階數</h2>
     <label for="size">選定階數:</label>
     <select
-      id="size"
       name="size"
-      size="3"
-      :value="size"
+      v-model="size"
       width="40"
       style="font-size: 20pt"
     >
@@ -29,7 +26,7 @@
       <option value="4">4</option>
       <option value="5">5</option>
     </select>
-    <button id="play" @click="this.play" :disabled="playDisable">開始玩</button>
+    <button @click="this.play" :disabled="playDisable">開始玩</button>
     <h2>操作方法</h2>
     <p>
       有兩種模式，當滑鼠為單十字時可轉動單層方塊，當滑鼠為附箭頭十字時可轉動整個塊魔術方塊。
@@ -99,6 +96,7 @@
     </p>
   </div>
 </template>
+
 <script>
 import * as THREE from "three";
 //const THREE = require("three.module");
@@ -106,6 +104,7 @@ import { OrbitControls } from "./OrbitControls.js";
 //const { OrbitControls } = require("OrbitControls")
 import { generateMagicCube, rotateMagicCube } from "./utilsn.js";
 //const { createCube, generateMagicCube, rotateMagicCube } =require('./utilsn')
+
 let camera;
 let scene;
 let magicCube;
@@ -383,13 +382,13 @@ button {
   margin: 5;
   font-size: 20pt;
 }
-#c {
+canvas {
   float: left;
   width: 50vw;
   height: 90vh;
   cursor: crosshair;
 }
-#c:focus {
+canvas:focus {
   outline: none;
 }
 </style>
