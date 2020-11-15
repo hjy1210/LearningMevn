@@ -100,7 +100,8 @@
 <script>
 import * as THREE from "three";
 //const THREE = require("three.module");
-import { OrbitControls } from "./OrbitControls.js";
+//import { OrbitControls } from "./OrbitControls.js";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 //const { OrbitControls } = require("OrbitControls")
 import { generateMagicCube, rotateMagicCube } from "./utilsn.js";
 //const { createCube, generateMagicCube, rotateMagicCube } =require('./utilsn')
