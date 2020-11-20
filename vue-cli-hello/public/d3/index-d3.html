@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <script type='module'>
+        import { values } from './values.js'
+
+        async function work(v) {
+            let vs
+            try {
+                vs = await d3.json("./values.json")
+            } catch (ex) {
+                throw ex
+            }
+            console.log([d3.min(vs), d3.median(vs), d3.max(vs)])
+            d3.select("body").append("p").text(`New paragraph ${v}!`);
+        }
+
+        let v = Math.random()
+        if (v < 0.5) {
+            console.log(values[0], values[values.length - 1])
+            console.log([d3.min(values), d3.median(values), d3.max(values)])
+            d3.select("body").append("p").text(`New paragraph ${v}!`);
+        } else {
+            work(v)
+        }
+    </script>
+</body>
+
+</html>

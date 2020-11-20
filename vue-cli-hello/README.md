@@ -27,3 +27,13 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 `vue create vue-cli-hello` 之後，新增public/hello-vue.html，
 用 hello-vue.html 進行 [vue-guide Introduction](https://vuejs.org/v2/guide/) 的學習。
 
+## 練習 THREEJS/WebGL
+`public/exercises/index.html` 利用 Three.js 實作魔術方塊，可用來玩魔術方塊。
+
+`src/components/MagicCube.vue` 是個 Vue component，可用來玩魔術方塊。
+
+
+## 練習 D3
+[async_function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function) 說明如何利用 async funtion 使用 promise
+
+d3.json 回傳 promise，`public/d3/index-d3.html` 示範如何活用 d3.json 得到資料。
