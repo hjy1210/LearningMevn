@@ -1,8 +1,10 @@
 <template>
   <div>
+    <div v-html="content"></div>
     <textarea
       v-on:keyup.enter.ctrl="typeset3"
       title="type paragraph with mathematics, then press ctrl+enter"
+      v-model="content"
     ></textarea
     ><br />
     <div class="mathjax-output"></div>
@@ -11,6 +13,7 @@
 <script>
 export default {
   name: "mathjax-output",
+  props: ["content"],
   methods: {
     typeset2(ev) {
       var v = ev.target.value;

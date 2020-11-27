@@ -6,7 +6,9 @@
 </template>-->
 <template>
   <div id="app">
-    <mathjaxcomp></mathjaxcomp>
+    <p>請上載由cml轉成的json檔</p>
+    <input id="jsonfile" type="file" @change.prevent="loadfile">
+    <mathjaxcomp :content="content"></mathjaxcomp>
     <mathjaxcomp></mathjaxcomp>
 
     <table border="1" width="100%" style="border-collapse: collapse">
@@ -58,7 +60,7 @@
 <script>
 // import HelloWorld from "./components/HelloWorld.vue";
 import mathjaxcomp from "../components/mathjaxcomp";
-import gql from "graphql-tag";
+// import gql from "graphql-tag";
 const axios = require("axios");
 
 export default {
@@ -69,6 +71,7 @@ export default {
       name: "",
       rating: "",
       chefs: [],
+      content:"\\(x^{14}\\)"
     };
   },
   created() {
@@ -210,6 +213,12 @@ export default {
           //console.log(result.data.data.dishes);
         });
     },
+    loadfile: async function(){
+      const file=document.getElementById("jsonfile").files[0]
+      const text = await file.text()
+      const jsondata = JSON.parse(text)
+      this.content=jsondata.html
+    }
   },
 };
 </script>
