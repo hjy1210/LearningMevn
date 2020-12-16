@@ -47,6 +47,19 @@ function initData() {
 ///// https://threejsfundamentals.org/threejs/lessons/threejs-picking.html
 function getCanvasRelativePosition(event) {
 	const rect = canvas.getBoundingClientRect();
+	if (event.changedTouches && event.changedTouches.length>0) {
+		event.preventDefault()
+		let clientX = event.changedTouches[0].pageX
+		let clientY = event.changedTouches[0].pageY
+		//let span = document.querySelector('#message');
+		//span.innerHTML = "clientX="+clientX+", clientY="+clientY
+		return {
+			x: (clientX - rect.left) * canvas.width / rect.width,
+			y: (clientY - rect.top) * canvas.height / rect.height
+		}
+	}
+	//let span = document.querySelector('#message');
+	//span.innerHTML = "clientX="+event.clientX+", clientY="+event.clientY
 	return {
 		x: (event.clientX - rect.left) * canvas.width / rect.width,
 		y: (event.clientY - rect.top) * canvas.height / rect.height
@@ -54,11 +67,16 @@ function getCanvasRelativePosition(event) {
 }
 
 async function onMouseClick(event) {
+	// event.preventDefault()
 	// calculate mouse position in normalized device coordinates
 	// (-1 to +1) for both components
 	if (enabled || turning) return; // 控制camara角度時，不應該可以轉動玩具
 	//mouse.x = event.clientX / window.innerWidth * 2 - 1;      ///// 這樣的話，canvas必須寬度占滿整個視窗才行
 	//mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+	if (event.changedTouches && event.changedTouches.length>1){
+		switchEnabled()
+		return
+	}
 	let pos = getCanvasRelativePosition(event);
 	mouse.x = pos.x / canvas.width * 2 - 1;
 	mouse.y = pos.y / canvas.height * -2 + 1; // note we flip Y
@@ -137,6 +155,8 @@ function initCamera() {
 	canvas = document.querySelector('#c');
 	canvas.addEventListener('mousedown', onMouseClick, false);
 	canvas.addEventListener('mouseup', onMouseClick, false);
+	canvas.addEventListener("touchstart", onMouseClick, false);
+	canvas.addEventListener("touchend", onMouseClick, false);
 
 	renderer = new THREE.WebGLRenderer({ canvas });
 
